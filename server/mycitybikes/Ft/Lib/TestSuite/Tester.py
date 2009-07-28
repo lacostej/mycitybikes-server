@@ -1,0 +1,1 @@
+/usr/share/pyshared/Ft/Lib/TestSuite/Tester.py

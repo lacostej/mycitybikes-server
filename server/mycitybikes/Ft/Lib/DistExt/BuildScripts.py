@@ -1,0 +1,1 @@
+/usr/share/pyshared/Ft/Lib/DistExt/BuildScripts.py

@@ -1,0 +1,1 @@
+/usr/share/pyshared/Ft/Xml/Xslt/StringWriter.py

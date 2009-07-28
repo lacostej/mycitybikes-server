@@ -1,0 +1,1 @@
+/usr/share/pyshared/Ft/Xml/XPointer/MessageSource.py
