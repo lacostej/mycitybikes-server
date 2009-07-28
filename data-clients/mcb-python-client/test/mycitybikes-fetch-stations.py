@@ -4,7 +4,7 @@
 from mycitybikes.mycitybikes import *
 
 # comment this out to test communication to the stubs
-#MyCityBikes.enableMocks()
+# MyCityBikes.enableMocks()
 
 # change the server you're talking to
 #MyCityBikes.setServerRoot("http://localhost/v1/")
@@ -59,3 +59,7 @@ showStations(stations)
 stationStatuses = MyCityBikes.getStationStatuses(1)
 
 showStationStatuses(stationStatuses)
+
+stationStatus = MyCityBikes.getStationStatus(1, 1)
+
+showStationStatus(stationStatus)

@@ -133,7 +133,7 @@ class MyCityBikes:
     return stationStatuses
 
   def getStationStatus(cityId, stationId):
-    xml = LL.getStations(MyCityBikes.serverRoot, cityId, [stationId])
+    xml = LL.getStationStatus(MyCityBikes.serverRoot, cityId, stationId)
     node = ET.XML(xml)
     return MyCityBikes.__parseStationStatusNode(node)
 
