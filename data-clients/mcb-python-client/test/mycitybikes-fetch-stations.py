@@ -11,6 +11,17 @@ def showCities(cities):
   for city in cities:
     showCity(city)
 
+def showStation(station):
+  print "Station id:%s\t%s\t%s\t(%s,%s)" % (station.id, station.cityId, station.description, station.latitude, station.longitude)
+
+def showStations(stations):
+  print "Found %s station(s)" % (len(stations))
+  for station in stations:
+    showStation(station)
+
+
+# MyCityBikes.getStations(1, [1,2])
+
 # mycitybikes.MyCityBikes.setServerRoot("http://localhost/v1/")
 
 MyCityBikes.enableMocks()
@@ -24,4 +35,6 @@ oslo = MyCityBikes.getCity(osloId)
 
 showCity(oslo)
 
+stations = MyCityBikes.getStations(1)
 
+showStations(stations)
