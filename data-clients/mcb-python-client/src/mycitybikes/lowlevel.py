@@ -64,7 +64,7 @@ def getStations(serverRoot, cityId, stationIds=None):
 
 # @param serverRoot the url of the serverRoot
 # @param cityId the id of the city that contains the stations
-# @param stationsId the id of the station to retrieve
+# @param stationId the id of the station to retrieve
 def getStation(serverRoot, cityId, stationId):
   h = httplib2.Http(".cache")
   url = serverRoot + "/stations/city/" + str(cityId) + "/" + str(stationId) + ".xml"
@@ -81,8 +81,38 @@ def getStation(serverRoot, cityId, stationId):
 # @param serverRoot the url of the serverRoot
 # @param cityId the id of the city that contains the stations
 # @param stationsIds the list of ids of the stations to retrieve. None to retrieve them all
-def getStationsStatuses(serverRoot, cityId, stationIds=None):
-  return "<stationStatuses/>"
+# @param serverRoot the url of the serverRoot
+# @param cityId the id of the city that contains the stations
+# @param stationsIds the list of ids of the stations to retrieve. None to retrieve them all
+def getStationStatuses(serverRoot, cityId, stationIds=None):
+  h = httplib2.Http(".cache")
+  if (stationIds == None):
+    ids = "all"
+  else:
+#    ids = str.join(',', stationIds)
+    ids = ','.join([`num` for num in stationIds])
+  url = serverRoot + "/stationStatuses/city/" + str(cityId) + "/" + ids + ".xml"
+  print url
+  resp, content = h.request(url)
+  if (resp.status != 200):
+    # FIXME
+    pass
+  if (resp['content-type'] == 'text/xml'):
+    # FIXME
+    pass
+  return content
 
-
-
+# @param serverRoot the url of the serverRoot
+# @param cityId the id of the city that contains the stations
+# @param stationId the id of the station to retrieve
+def getStationStatus(serverRoot, cityId, stationId):
+  h = httplib2.Http(".cache")
+  url = serverRoot + "/stationStatuses/city/" + str(cityId) + "/" + str(stationId) + ".xml"
+  resp, content = h.request(url)
+  if (resp.status != 200):
+    # FIXME
+    pass
+  if (resp['content-type'] == 'text/xml'):
+    # FIXME
+    pass
+  return content
