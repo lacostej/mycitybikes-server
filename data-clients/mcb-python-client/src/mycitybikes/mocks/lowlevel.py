@@ -11,6 +11,10 @@ OSLO_STATION_1=ur'<station><id>1</id><cityId>1</cityId><description>Vestbanen S\
 
 OSLO_STATION_2=ur'<station><id>1</id><cityId>1</cityId><description>Ullev\u00e5lsveien 9 v/V\u00e5r Frues hospital,ovenf Barnevognhuset</description><latitude>59.91953799289473</latitude><longitude>10.743963718414306</longitude><creationDateTime>2009-07-28T16:47:00.000Z</creationDateTime><updateDateTime>2009-07-28T16:48:00.000Z</updateDateTime></station>'
 
+OSLO_STATION_STATUS_1=ur'<stationStatus><cityId>1</cityId><stationId>1</stationId><availableBikes>8</availableBikes><freeSlots>3</freeSlots><totalSlots>11</totalSlots><updateDateTime>2009-07-28T16:48:00.000Z</updateDateTime></stationStatus>'
+
+OSLO_STATION_STATUS_2=ur'<stationStatus><cityId>1</cityId><stationId>2</stationId><availableBikes>3</availableBikes><freeSlots>0</freeSlots><totalSlots>4</totalSlots><updateDateTime>2009-07-28T16:48:00.000Z</updateDateTime></stationStatus>'
+
 def __u(s):
   return s.encode("utf-8")
 
@@ -29,6 +33,9 @@ def getStations(serverRoot, cityId, stationIds=None):
 def getStation(serverRoot, cityId, stationId):
   return __u(PROLOGUE+"<stations>" + OSLO_STATION_1 + "</stations>")
 
-def getStationsStatuses(serverRoot, cityId, stationIds=None):
-  return __u(PROLOGUE+"<stationStatuses/>")
+def getStationStatuses(serverRoot, cityId, stationIds=None):
+  return __u(PROLOGUE+"<stationStatuses>" + OSLO_STATION_STATUS_1 + OSLO_STATION_STATUS_2 + "</stationStatuses>" )
+
+def getStationStatus(serverRoot, cityId, stationId):
+  return __u(PROLOGUE+"<stationStatuses>" + OSLO_STATION_STATUS_1 + "</stationStatuses>" )
 

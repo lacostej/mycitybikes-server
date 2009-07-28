@@ -99,7 +99,7 @@ class MyCityBikes:
   def getCities():
     #print "using " + LL.info()
     xml = LL.getCities(MyCityBikes.serverRoot, None)
-    #print xml
+    print xml
     node = ET.XML(xml)
     cities = []
     for cityNode in node:
