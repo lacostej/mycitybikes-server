@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Lib/DistExt/InstallL10n.py

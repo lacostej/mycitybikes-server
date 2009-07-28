@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Lib/CommandLine/__init__.py

@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Lib/DistExt/BuildDocs.py

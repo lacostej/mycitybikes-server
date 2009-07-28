@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Xml/XPointer/XPointer.py

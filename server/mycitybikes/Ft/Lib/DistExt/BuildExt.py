@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Lib/DistExt/BuildExt.py

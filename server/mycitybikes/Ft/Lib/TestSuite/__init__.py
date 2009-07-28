@@ -1,1 +1,0 @@
-/usr/share/pyshared/Ft/Lib/TestSuite/__init__.py
