@@ -3,6 +3,20 @@
 
 from mycitybikes.mycitybikes import *
 
+# comment this out to test communication to the stubs
+#MyCityBikes.enableMocks()
+
+# change the server you're talking to
+#MyCityBikes.setServerRoot("http://localhost/v1/")
+#MyCityBikes.setServerRoot("http://190.186.22.131")
+
+# used to reset the server root
+#MyCityBikes.setServerRoot()
+
+
+#
+# 
+#
 def showCity(city):
   print "City id:%s\t%s,%s:\t(%s,%s)\t?? station(s)" % (city.id, city.name, city.country, city.latitude, city.longitude)
 
@@ -20,13 +34,9 @@ def showStations(stations):
     showStation(station)
 
 
+
 # MyCityBikes.getStations(1, [1,2])
 
-# mycitybikes.MyCityBikes.setServerRoot("http://localhost/v1/")
-
-MyCityBikes.enableMocks()
-
-MyCityBikes.setServerRoot()
 cities = MyCityBikes.getCities()
 showCities(cities)
 
