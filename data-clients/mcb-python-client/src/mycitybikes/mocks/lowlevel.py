@@ -31,7 +31,7 @@ def getStations(serverRoot, cityId, stationIds=None):
   return __u(PROLOGUE+"<stations>" + OSLO_STATION_1 + OSLO_STATION_2 + "</stations>")
 
 def getStation(serverRoot, cityId, stationId):
-  return __u(PROLOGUE+"<stations>" + OSLO_STATION_1 + "</stations>")
+  return __u(PROLOGUE+OSLO_STATION_1)
 
 def getStationStatuses(serverRoot, cityId, stationIds=None):
   return __u(PROLOGUE+"<stationStatuses>" + OSLO_STATION_STATUS_1 + OSLO_STATION_STATUS_2 + "</stationStatuses>" )

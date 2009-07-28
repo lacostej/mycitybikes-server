@@ -56,6 +56,11 @@ stations = MyCityBikes.getStations(1)
 
 showStations(stations)
 
+station = MyCityBikes.getStation(1, 1)
+
+showStation(station)
+
+
 stationStatuses = MyCityBikes.getStationStatuses(1)
 
 showStationStatuses(stationStatuses)
