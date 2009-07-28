@@ -12,6 +12,7 @@ def getCities(serverRoot, cityIds=None):
   if (resp.status != 200):
     # FIXME
     pass
+  # FIXME this fails if no content-type specified
   if (resp['content-type'] == 'text/xml'):
     # FIXME
     pass
