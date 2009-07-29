@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('mycitybikes.views',
-    (r'cities/$', 'list_cities'),
+from mycitybikes.router import mapping
+from mycitybikes.views import *
+
+urlpatterns = patterns('',
+
+    mapping(r'^stations/provider/(?P<providerId>\d+)/all.xml$', 'provider_stations',
+            provider_stations_get, None, provider_stations_put),
+
+    url(r'cities/$', cities_get),
     
-    (r'cities.xml$', 'list_cities'),
+    url(r'cities.xml$', cities_get),
+
 )
