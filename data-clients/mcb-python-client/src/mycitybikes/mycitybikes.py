@@ -3,7 +3,12 @@ import lowlevel as LL
 from StringIO import StringIO
 
 # pyXML (python-xml in debian/ubuntu)
-from xml.utils.iso8601 import parse
+
+try:
+  from xml.utils.iso8601 import parse
+except ImportError:
+  print "Couldn't load iso8601 from system. Using one from library"
+  from lib.iso8601 import parse
 
 class Callable:
   def __init__(self, anycallable):
