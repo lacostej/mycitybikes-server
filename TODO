@@ -7,3 +7,7 @@
 * [JEROME] define the new model for BikeStation (i.e. id, name, ...)
 * [JEROME] define the station reconciliation algo for data. Implement the algorythm for Norway and another city (washington ?)
 
+
+
+FUTURE
+* do we need to keep track of timezone ? Maybe in city
