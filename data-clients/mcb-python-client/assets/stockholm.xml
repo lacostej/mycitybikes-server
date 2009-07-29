@@ -1,0 +1,435 @@
+<!--  Contributed by robert hedblad <robert.hedblad@skarpnacksfriaskola.com> 2009-06-15 -->
+<stations>
+   <station>
+      <id>18</id>
+      <description>Fatbursgången, Södra Station</description>
+      <latitude>59.314224</latitude>
+      <longitude>18.065300</longitude>
+   </station>
+   <station>
+      <id>20</id>
+      <description>Folkungag. 134/Stigbergsparken</description>
+      <latitude>59.3155951</latitude>
+      <longitude>18.0884494</longitude>
+   </station>
+   <station>
+      <id>70</id>
+      <description>Folkungagatan/Londonviadukten</description>
+      <latitude>59.3147692</latitude>
+      <longitude>18.0966425</longitude>
+   </station>
+   <station>
+      <id>27</id>
+      <description>Götgatan 71</description>
+      <latitude>59.3118456</latitude>
+      <longitude>18.0747961</longitude>
+   </station>
+   <station>
+      <id>2</id>
+      <description>Götgatan 98/Dalslandsgatan</description>
+      <latitude>59.3092779</latitude>
+      <longitude>18.0760753</longitude>
+   </station>
+   <station>
+      <id>33</id>
+      <description>Hammarby Allé/Textilgatan</description>
+      <latitude>59.3021086</latitude>
+      <longitude>18.0893669</longitude>
+   </station>
+   <station>
+      <id>11</id>
+      <description>Hornsgatan 140 Hornstull</description>
+      <latitude>59.3161672</latitude>
+      <longitude>18.0407984</longitude>
+   </station>
+   <station>
+      <id>21</id>
+      <description>Mariatorget 7</description>
+      <latitude>59.3178166</latitude>
+      <longitude>18.0634906</longitude>
+   </station>
+   <station>
+      <id>5</id>
+      <description>Medborgarplatsen</description>
+      <latitude>59.314879</latitude>
+      <longitude>18.072913</longitude>
+   </station>
+   <station>
+      <id>17</id>
+      <description>Renstiernas Gata 18</description>
+      <latitude>59.3153673</latitude>
+      <longitude>18.0838682</longitude>
+   </station>
+   <station>
+      <id>24</id>
+      <description>Ringvägen 45A</description>
+      <latitude>59.3123229</latitude>
+      <longitude>18.0543944</longitude>
+   </station>
+   <station>
+      <id>23</id>
+      <description>Ringvägen 54</description>
+      <latitude>59.3091243</latitude>
+      <longitude>18.0620675</longitude>
+   </station>
+   <station>
+      <id>25</id>
+      <description>Ringvägen 108</description>
+      <latitude>59.3080052</latitude>
+      <longitude>18.078751</longitude>
+   </station>
+   <station>
+      <id>26</id>
+      <description>Ringvägen 111 Skanstull</description>
+      <latitude>59.307614</latitude>
+      <longitude>18.0745898</longitude>
+   </station>
+   <station>
+      <id>48</id>
+      <description>Ringvägen 125</description>
+      <latitude>59.3080857</latitude>
+      <longitude>18.078461</longitude>
+   </station>
+   <station>
+      <id>47</id>
+      <description>Ringvägen 138</description>
+      <latitude>59.3087427</latitude>
+      <longitude>18.0825508</longitude>
+   </station>
+   <station>
+      <id>22</id>
+      <description>Södermalmstorg, Slussen</description>
+      <latitude>59.3201912</latitude>
+      <longitude>18.0709053</longitude>
+   </station>
+   <station>
+      <id>69</id>
+      <description>Södermälarstrand/Münchenbryggeriet</description>
+      <latitude>59.320628</latitude>
+      <longitude>18.056084</longitude>
+   </station>
+   <station>
+      <id>4</id>
+      <description>Thor Modéns Trappa, Slussen</description>
+      <latitude>59.319747</latitude>
+      <longitude>18.074098</longitude>
+   </station>
+   <station>
+      <id>3</id>
+      <description>Tjärhovsplan</description>
+      <latitude>59.3164826</latitude>
+      <longitude>18.0834246</longitude>
+   </station>
+   <station>
+      <id>1</id>
+      <description>Allmänna Gränd/ Gröna Lund </description>
+      <latitude>59.3239572</latitude>
+      <longitude>18.0970846</longitude>
+   </station>
+   <station>
+      <id>12</id>
+      <description>Munkbroleden, Gamla Stan</description>
+      <latitude>59.3230674</latitude>
+      <longitude>18.0680631</longitude>
+   </station>
+   <station>
+      <id>34</id>
+      <description>Skeppsbrokajen </description>
+      <latitude>59.3236212</latitude>
+      <longitude>18.0753809</longitude>
+   </station>
+   <station>
+      <id>64</id>
+      <description>Birkagatan 7-9 </description>
+      <latitude>59.3394531</latitude>
+      <longitude>18.0324831</longitude>
+   </station>
+   <station>
+      <id>72</id>
+      <description>Dannemorag./ Norra Stationsg. </description>
+      <latitude>59.3480285</latitude>
+      <longitude>18.0440851</longitude>
+   </station>
+   <station>
+      <id>37</id>
+      <description>Karlbergsvägen 38 </description>
+      <latitude>59.3427452</latitude>
+      <longitude>18.0408312</longitude>
+   </station>
+   <station>
+      <id>13</id>
+      <description>Odenplan mot S:t Eriksgatan</description>
+      <latitude>59.342778</latitude>
+      <longitude>18.049722</longitude>
+   </station>
+   <station>
+      <id>14</id>
+      <description>Odenplan mot Sveavägen</description>
+      <latitude>59.342778</latitude>
+      <longitude>18.049722</longitude>
+   </station>
+   <station>
+      <id>15</id>
+      <description>S:t Eriksplan 6C</description>
+      <latitude>59.3396706</latitude>
+      <longitude>18.03749</longitude>
+   </station>
+   <station>
+      <id>62</id>
+      <description>S:t Eriksgatan 95 </description>
+      <latitude>59.3430238</latitude>
+      <longitude>18.03879</longitude>
+   </station>
+   <station>
+      <id>60</id>
+      <description>Sveavägen 53 </description>
+      <latitude>59.3382621</latitude>
+      <longitude>18.0607526</longitude>
+   </station>
+   <station>
+      <id>39</id>
+      <description>Sveavägen 66 </description>
+      <latitude>59.3389471</latitude>
+      <longitude>18.0602804</longitude>
+   </station>
+   <station>
+      <id>40</id>
+      <description>Sveavägen 110 </description>
+      <latitude>59.3434911</latitude>
+      <longitude>18.0560141</longitude>
+   </station>
+   <station>
+      <id>57</id>
+      <description>Sveavägen 127/Vanadislunden</description>
+      <latitude>59.3475336</latitude>
+      <longitude>18.0522153</longitude>
+   </station>
+   <station>
+      <id>30</id>
+      <description>Torsgatan/Vasaparken</description>
+      <latitude>59.3393716</latitude>
+      <longitude>18.039363</longitude>
+   </station>
+   <station>
+      <id>8</id>
+      <description>Drottningholmsv. 13, Fridhemsplan</description>
+      <latitude>59.3319985</latitude>
+      <longitude>18.0307028</longitude>
+   </station>
+   <station>
+      <id>68</id>
+      <description>Essige Brogata/ Mariebergsbron </description>
+      <latitude>59.325022</latitude>
+      <longitude>18.005549</longitude>
+   </station>
+   <station>
+      <id>10</id>
+      <description>Fleminggatan 4-6 </description>
+      <latitude>59.3324157</latitude>
+      <longitude>18.0482592</longitude>
+   </station>
+   <station>
+      <id>42</id>
+      <description>Hantverkarg. 1/Stadshuset </description>
+      <latitude>59.3275548</latitude>
+      <longitude>18.0555762</longitude>
+   </station>
+   <station>
+      <id>43</id>
+      <description>Hantverkarg. 1/Stadshusbron </description>
+      <latitude>59.327945</latitude>
+      <longitude>18.055557</longitude>
+   </station>
+   <station>
+      <id>71</id>
+      <description>Norr Mälarstrand/ Hantverkarg. 3D </description>
+      <latitude>59.3278889</latitude>
+      <longitude>18.052057</longitude>
+   </station>
+   <station>
+      <id>50</id>
+      <description>Rålambsvägen/ Gjörwellsgatan </description>
+      <latitude>59.328342</latitude>
+      <longitude>18.017013</longitude>
+   </station>
+   <station>
+      <id>63</id>
+      <description>S:t Eriksgatan 30 </description>
+      <latitude>59.3325012</latitude>
+      <longitude>18.0313177</longitude>
+   </station>
+   <station>
+      <id>9</id>
+      <description>S:t Göransg. 143, Stadshagen</description>
+      <latitude>59.3366027</latitude>
+      <longitude>18.0176964</longitude>
+   </station>
+   <station>
+      <id>36</id>
+      <description>Birger Jarlsg. 12, Östermalmstorg</description>
+      <latitude>59.3413394</latitude>
+      <longitude>18.0652494</longitude>
+   </station>
+   <station>
+      <id>44</id>
+      <description>Bryggargatan 12B/ Vasagatan </description>
+      <latitude>59.3328123</latitude>
+      <longitude>18.0584686</longitude>
+   </station>
+   <station>
+      <id>38</id>
+      <description>Centralplan, T-Centralen</description>
+      <latitude>59.3298776</latitude>
+      <longitude>18.0592609</longitude>
+   </station>
+   <station>
+      <id>35</id>
+      <description>Drottningg., T-Centralen</description>
+      <latitude>59.3347842</latitude>
+      <longitude>18.0602181</longitude>
+   </station>
+   <station>
+      <id>31</id>
+      <description>Drottninggatan/ Vattugatan </description>
+      <latitude>59.330277</latitude>
+      <longitude>18.0627214</longitude>
+   </station>
+   <station>
+      <id>32</id>
+      <description>Hamngatan, vid Gallerian </description>
+      <latitude>59.3327881</latitude>
+      <longitude>18.0644881</longitude>
+   </station>
+   <station>
+      <id>49</id>
+      <description>Hamngatan/ Kungsträdgården </description>
+      <latitude>59.33125</latitude>
+      <longitude>18.071417</longitude>
+   </station>
+   <station>
+      <id>16</id>
+      <description>Klarabergsgatan 50, T-Centralen</description>
+      <latitude>59.3321142</latitude>
+      <longitude>18.0618787</longitude>
+   </station>
+   <station>
+      <id>41</id>
+      <description>Klarabergsgatan 56, T-Centralen</description>
+      <latitude>59.3315343</latitude>
+      <longitude>18.0594383</longitude>
+   </station>
+   <station>
+      <id>53</id>
+      <description>Kungsgatan 24 </description>
+      <latitude>59.3358605</latitude>
+      <longitude>18.0663162</longitude>
+   </station>
+   <station>
+      <id>29</id>
+      <description>Norrmalmstorg </description>
+      <latitude>59.3333318</latitude>
+      <longitude>18.0732853</longitude>
+   </station>
+   <station>
+      <id>54</id>
+      <description>Sveavägen 29 </description>
+      <latitude>59.3426248</latitude>
+      <longitude>18.0568411</longitude>
+   </station>
+   <station>
+      <id>55</id>
+      <description>Sveavägen 31 </description>
+      <latitude>59.3363332</latitude>
+      <longitude>18.0624709</longitude>
+   </station>
+   <station>
+      <id>56</id>
+      <description>Sveavägen 35 </description>
+      <latitude>59.3369272</latitude>
+      <longitude>18.0619285</longitude>
+   </station>
+   <station>
+      <id>65</id>
+      <description>Tegelbacken 6 </description>
+      <latitude>59.3286673</latitude>
+      <longitude>18.0611156</longitude>
+   </station>
+   <station>
+      <id>66</id>
+      <description>Erik Dahlbergsgatan 26 </description>
+      <latitude>59.3427677</latitude>
+      <longitude>18.092053</longitude>
+   </station>
+   <station>
+      <id>73</id>
+      <description>Kaknästornet </description>
+      <latitude>59.3349987</latitude>
+      <longitude>18.1265642</longitude>
+   </station>
+   <station>
+      <id>51</id>
+      <description>Karlaplan/ Fältöversten</description>
+      <latitude>59.3377617</latitude>
+      <longitude>18.0911491</longitude>
+   </station>
+   <station>
+      <id>67</id>
+      <description>Karlavägen 115/ Garnisonen </description>
+      <latitude>59.3395894</latitude>
+      <longitude>18.0813789</longitude>
+   </station>
+   <station>
+      <id>58</id>
+      <description>Lindarängsv./ Tegeluddsvägen</description>
+      <latitude>59.3394154</latitude>
+      <longitude>18.1166521</longitude>
+   </station>
+   <station>
+      <id>28</id>
+      <description>Ropsten/Busstorget</description>
+      <latitude>59.357341</latitude>
+      <longitude>18.103136</longitude>
+   </station>
+   <station>
+      <id>45</id>
+      <description>Runebergsplan </description>
+      <latitude>59.3417308</latitude>
+      <longitude>18.0707349</longitude>
+   </station>
+   <station>
+      <id>61</id>
+      <description>Rådmansgatan 2 </description>
+      <latitude>59.344171</latitude>
+      <longitude>18.072610</longitude>
+   </station>
+   <station>
+      <id>46</id>
+      <description>Sturegatan 19 </description>
+      <latitude>59.3417613</latitude>
+      <longitude>18.0770541</longitude>
+   </station>
+   <station>
+      <id>59</id>
+      <description>Tegeluddsvägen 100</description>
+      <latitude>59.3396171</latitude>
+      <longitude>18.1145096</longitude>
+   </station>
+   <station>
+      <id>6</id>
+      <description>Valhallav./Grev Tureg., Stadion</description>
+      <latitude>59.3433506</latitude>
+      <longitude>18.0812849</longitude>
+   </station>
+   <station>
+      <id>7</id>
+      <description>Valhallav., Tekniska Högskolan</description>
+      <latitude>59.3484877</latitude>
+      <longitude>18.0717643</longitude>
+   </station>
+   <station>
+      <id>52</id>
+      <description>Östermalmsgatan 90 </description>
+      <latitude>59.3397583</latitude>
+      <longitude>18.0876857</longitude>
+   </station>
+</stations>

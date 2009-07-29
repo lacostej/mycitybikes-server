@@ -22,7 +22,7 @@ def getCities(serverRoot, cityIds=None):
 # @param cityId the id of the city to retrieve
 def getCity(serverRoot, cityId):
   h = httplib2.Http(".cache")
-  resp, content = h.request(serverRoot + "/cities/" + cityId + ".xml")
+  resp, content = h.request(serverRoot + "/cities/" + str(cityId) + ".xml")
   if (resp.status != 200):
     # FIXME
     pass
@@ -61,6 +61,24 @@ def getStations(serverRoot, cityId, stationIds=None):
     # FIXME
     pass
   return content
+
+# @param serverRoot the url of the serverRoot
+# @param providerId the id of the provider that controls the stations
+# @param stationsXml the xml representing the stations
+def setStations(serverRoot, providerId, stationsXml):
+  h = httplib2.Http(".cache")
+  url = serverRoot + "/stations/provider/" + str(providerId) + "/all.xml"
+  print url
+  resp, content = h.request(url, "PUT", body=stationsXml, headers = {'content-type': 'text/xml'})
+  if (resp.status != 200):
+    print resp
+    # FIXME
+    pass
+#  if (resp['content-type'] == 'text/xml'):
+#    # FIXME
+#    pass
+#  return content
+
 
 # @param serverRoot the url of the serverRoot
 # @param cityId the id of the city that contains the stations

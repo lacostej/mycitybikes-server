@@ -1,7 +1,5 @@
 import httplib2
 
-# FIXME unicode handling is ugly
-
 PROLOGUE='<?xml version="1.0" encoding="utf-8" ?>'
 
 OSLO="<city><id>1</id><name>Oslo</name><country>Norway</country><latitude>59.913821</latitude><longitude>10.738739</longitude><creationDateTime>2009-07-28T16:47:00.000Z</creationDateTime><updateDateTime>2009-07-28T16:48:00.000Z</updateDateTime></city>"
