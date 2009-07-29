@@ -21,12 +21,30 @@ def city_get(request, cityId):
     return HttpResponse(city.to_xml().toxml(), content_type="text/xml")
 
 def provider_stations_put(request, providerId):
-    logging.info("**** PUT ")
+    logging.info(request.raw_post_data)
+
+    # FIXME we need to map name to id or introduce an externalId field
+
+#    stations = BikeStation.from_xml(request.raw_post_data)
+#    for station in stations:
+#        station = BikeStation.get_by_id(station.key().id())
+
     return HttpResponse('')
 
 def provider_stations_get(request, providerId):
-    logging.info("**** GET ")
-    return HttpResponse('')
+    doc = Document()
+    root = doc.createElement(u"stations")
+    for station in BikeStation.all().filter("providerRef = ", providerId):
+        root.appendChild(station.to_xml())
+    doc.appendChild(root)
+    return HttpResponse(doc.toxml(), content_type="text/xml")
 
+def city_stations_get(request, cityId):
+    doc = Document()
+    root = doc.createElement(u"stations")
+    for station in BikeStation.all():
+        root.appendChild(station.to_xml())
+    doc.appendChild(root)
+    return HttpResponse(doc.toxml(), content_type="text/xml")
 
 

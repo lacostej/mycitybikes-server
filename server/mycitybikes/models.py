@@ -43,3 +43,20 @@ class City(Positionable):
         city.appendChild(creationDatetime)
         city.appendChild(updateDatetime)
         return city
+
+class Provider(Base):
+    shortName = db.StringProperty(required=True)
+    fullName = db.StringProperty(required=True)
+    cityRef = db.ReferenceProperty(City, required=True)
+
+class BikeStation(Positionable):
+    name = db.StringProperty(required=True)
+    providerRef = db.ReferenceProperty(Provider, required=True)
+    description = db.StringProperty(required=True)
+    def to_xml(self):
+        station = model_to_dict(self)
+        station['creationDatetime'] = unicode(self.updateDatetime.isoformat()+ "Z")
+        station['updateDatetime'] = unicode(self.updateDatetime.isoformat() + "Z")
+        station['providerRef'] = self.providerRef.key().id()
+        station = dict_to_xml(station, "station")
+        return station
