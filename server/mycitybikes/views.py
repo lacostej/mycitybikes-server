@@ -8,13 +8,17 @@ from xml.dom.minidom import Document
 import logging
 
 def cities_get(request):
-    logging.info("*** list_cities")
     doc = Document()
     cities = doc.createElement(u"cities")
     for city in City.all():
         cities.appendChild(city.to_xml())
     doc.appendChild(cities)
     return HttpResponse(doc.toxml(), content_type="text/xml")
+
+def city_get(request, cityId):
+    city = City.get_by_id(int(cityId))
+    logging.info(city.to_xml().toxml())
+    return HttpResponse(city.to_xml().toxml(), content_type="text/xml")
 
 def provider_stations_put(request, providerId):
     logging.info("**** PUT ")

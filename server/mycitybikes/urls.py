@@ -9,7 +9,9 @@ urlpatterns = patterns('',
     mapping(r'^stations/provider/(?P<providerId>\d+)/all.xml$', 'provider_stations',
             provider_stations_get, None, provider_stations_put),
 
-    url(r'cities/$', cities_get),
+#    url(r'cities/$', cities_get),
+
+    url(r'cities/(?P<cityId>\d+).xml$', city_get),
     
     url(r'cities.xml$', cities_get),
 
