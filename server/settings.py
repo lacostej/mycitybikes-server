@@ -107,6 +107,8 @@ INSTALLED_APPS = (
     'mediautils',
 )
 
+APPEND_SLASH = False
+
 # List apps which should be left out from app settings and urlsauto loading
 IGNORE_APP_SETTINGS = IGNORE_APP_URLSAUTO = (
     # Example:
