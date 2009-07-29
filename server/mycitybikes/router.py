@@ -1,3 +1,5 @@
+# from http://watchitlater.com/blog/archives/39
+#
 from django.http import Http404, HttpResponseNotAllowed
 from django.conf.urls.defaults import url
 GET = 'GET'
