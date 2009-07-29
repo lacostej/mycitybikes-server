@@ -1,1 +1,13 @@
 Root for code related to mycitybikes.com
+
+Gettings started
+* python manage.py createsuperuser
+* add a link
+ ln -s /usr/local/lib/google_appengine `pwd`/common/
+
+* python2.5 manage.py runserver
+* test with one of the clients (after configuring it)
+
+Notes:
+* django compatible GAE from http://code.google.com/p/app-engine-patch/
+* 

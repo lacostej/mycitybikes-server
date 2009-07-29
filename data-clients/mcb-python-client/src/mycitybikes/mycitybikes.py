@@ -3,7 +3,12 @@ import lowlevel as LL
 from StringIO import StringIO
 
 # pyXML (python-xml in debian/ubuntu)
-from xml.utils.iso8601 import parse
+
+try:
+  from xml.utils.iso8601 import parse
+except ImportError:
+  print "Couldn't load iso8601 from system. Using one from library"
+  from lib.iso8601 import parse
 
 class Callable:
   def __init__(self, anycallable):
@@ -57,9 +62,13 @@ class MyCityBikes:
   def __parseStationNode(stationNode):
     for subNode in stationNode:
       if (subNode.tag == "id"):
-        id = subNode.text
+        stationId = subNode.text
       if (subNode.tag == "cityId"):
         cityId = subNode.text
+      if (subNode.tag == "externalId"):
+        externalId = subNode.text
+      if (subNode.tag == "name"):
+        name = subNode.text
       if (subNode.tag == "description"):
         description = subNode.text
       if (subNode.tag == "latitude"):
@@ -70,7 +79,7 @@ class MyCityBikes:
         creationDateTime = parse(subNode.text)
       if (subNode.tag == "updateDateTime"):
         updateDateTime = parse(subNode.text)
-    return Station(id, cityId, description, latitude, longitude, creationDateTime, updateDateTime)
+    return Station(stationId, cityId, externalId, name, description, latitude, longitude, creationDateTime, updateDateTime)
 
   # @param an Element representing the StationStatus
   # @return a StationStatus object representing the specified stationStatusNode
@@ -119,8 +128,12 @@ class MyCityBikes:
       stations.append(MyCityBikes.__parseStationNode(stationNode))
     return stations
 
+  def setStations(providerId, stations):
+    xml = StationList.to_xml(stations)
+    LL.setStations(MyCityBikes.serverRoot, providerId, xml)
+
   def getStation(cityId, stationId):
-    xml = LL.getStations(MyCityBikes.serverRoot, cityId, [stationId])
+    xml = LL.getStation(MyCityBikes.serverRoot, cityId, stationId)
     node = ET.XML(xml)
     return MyCityBikes.__parseStationNode(node)
 
@@ -133,16 +146,18 @@ class MyCityBikes:
     return stationStatuses
 
   def getStationStatus(cityId, stationId):
-    xml = LL.getStations(MyCityBikes.serverRoot, cityId, [stationId])
+    xml = LL.getStationStatus(MyCityBikes.serverRoot, cityId, stationId)
     node = ET.XML(xml)
     return MyCityBikes.__parseStationStatusNode(node)
 
   getCities = Callable(getCities)
   getCity = Callable(getCity)
   getStations = Callable(getStations)
+  setStations = Callable(setStations)
   getStation = Callable(getStation)
   getStationStatuses = Callable(getStationStatuses)
   getStationStatus = Callable(getStationStatus)
+
 
 class City:
   def __init__(self, id, name, country, latitude, longitude, creationDateTime, updateDateTime):
@@ -155,14 +170,69 @@ class City:
     self.updateDateTime = updateDateTime
 
 class Station:
-  def __init__(self, id, cityId, description, latitude, longitude, creationDateTime, updateDateTime):
+  def __init__(self, id, cityId, externalId, name, description, latitude, longitude, creationDateTime=None, updateDateTime=None):
     self.id = id
     self.cityId = cityId
+    self.externalId = externalId
+    self.name = name
     self.description = description
     self.latitude = latitude
     self.longitude = longitude
     self.creationDateTime = creationDateTime
     self.updateDateTime = updateDateTime
+
+  def to_xml(self):
+    output = []
+    output.append("<station>")
+    # FIXME this won't be necessary once we make the reconciliation happen on the client
+    if (self.id != None):
+      output.append("<id>")
+      output.append(self.id)
+      output.append("</id>")
+    output.append("<cityId>")
+    output.append(self.cityId)
+    output.append("</cityId>")
+    output.append("<externalId>")
+    output.append(self.externalId)
+    output.append("</externalId>")
+    if (self.name == None):
+      output.append("<name/>")
+    else:
+      output.append("<name>")
+      output.append(self.name)
+      output.append("</name>")
+    output.append("<description>")
+    output.append(self.description.encode("utf-8"))
+    output.append("</description>")
+    output.append("<latitude>")
+    output.append(self.latitude)
+    output.append("</latitude>")
+    output.append("<longitude>")
+    output.append(self.longitude)
+    output.append("</longitude>")
+    if (self.creationDateTime != None):
+      output.append("<creationDateTime>")
+      output.append(self.creationDateTime)
+      output.append("</creationDateTime>")
+    if (self.updateDateTime != None):
+      output.append("<updateDateTime>")
+      output.append(self.updateDateTime)
+      output.append("</updateDateTime>")
+    output.append("</station>")
+    return ''.join(output)
+
+class StationList:
+  # @param a list of Station instances
+  def to_xml(stations):
+    """Helper method to convert a list of Station into xml"""
+    l = []
+    l.append("<stations>")
+    for station in stations:
+      l.append(station.to_xml())
+    l.append("</stations>")
+    return ''.join(l)
+
+  to_xml = Callable(to_xml)
 
 class StationStatus:
   def __init__(self, cityId, stationId, availableBikes, freeSlots, totalSlots, updateDateTime):
@@ -172,4 +242,3 @@ class StationStatus:
     self.freeSlots = freeSlots
     self.totalSlots = totalSlots
     self.updateDateTime = updateDateTime
-

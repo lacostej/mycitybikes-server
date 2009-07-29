@@ -1,0 +1,13 @@
+* [VICTOR] finish to implement the Provider model and implementation
+* [VICTOR] investigate and fix Victor issue with test client
+* [VICTOR] deploy application to mycitybikes.appspot.com. Document briefly procedure for Jerome
+* [VICTOR] implement provider_stations_put
+* [JEROME] document the station status input data format
+* [VICTOR] implement provider_stations_status_put (start with a new test client and some input data)
+* [JEROME] define the new model for BikeStation (i.e. id, name, ...)
+* [JEROME] define the station reconciliation algo for data. Implement the algorythm for Norway and another city (washington ?)
+
+
+
+FUTURE
+* do we need to keep track of timezone ? Maybe in city
