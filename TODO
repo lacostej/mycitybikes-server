@@ -1,0 +1,7 @@
+* [VICTOR] investigate and fix Victor issue with test client
+* [VICTOR] deploy application to mycitybikes.appspot.com. Document briefly procedure for Jerome
+* [VICTOR] implement provider_stations_put
+* [VICTOR] implement provider_stations_status_put (start with a new test client)
+* [JEROME] define the new model for BikeStation (i.e. id, name, ...)
+* [JEROME] define the station reconciliation algo for data. Implement the algorythm for Norway and another city (washington ?)
+
