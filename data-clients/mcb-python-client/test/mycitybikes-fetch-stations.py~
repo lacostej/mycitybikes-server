@@ -4,12 +4,12 @@
 from mycitybikes.mycitybikes import *
 
 # comment this out to test communication to the stubs
-MyCityBikes.enableMocks()
+#MyCityBikes.enableMocks()
 
 # change the server you're talking to
 #MyCityBikes.setServerRoot("http://localhost/v1/")
 #MyCityBikes.setServerRoot("http://190.186.22.131")
-
+MyCityBikes.setServerRoot("http://localhost")
 # used to reset the server root
 #MyCityBikes.setServerRoot()
 

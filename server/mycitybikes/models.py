@@ -4,9 +4,11 @@ from google.appengine.ext import db
 from google.appengine.ext.db import polymodel
 from xml.dom.minidom import Document
 
+from utils import model_to_dict, dict_to_xml, delete_keys
+
 class Base(polymodel.PolyModel):
-    creationDatetime = db.DateTimeProperty(required=False)
-    updateDatetime = db.DateTimeProperty(required=False)
+    creationDateTime = db.DateTimeProperty(required=False)
+    updateDateTime = db.DateTimeProperty(required=False)
 
 class Positionable(Base):
     geoloc = db.GeoPtProperty(required=True)
@@ -14,32 +16,68 @@ class Positionable(Base):
 class City(Positionable):
     name = db.StringProperty(required=True)
     country = db.StringProperty(required=True)
-    
+
     def __unicode__(self):
         return '%s' % (self.name)
+
+    def to_xml(self):
+        city = model_to_dict(self)
+        city['latitude'] = self.geoloc.lat
+        city['longitude'] = self.geoloc.lon
+        city['creationDateTime'] = unicode(self.updateDateTime.isoformat()+ "Z")
+        city['updateDateTime'] = unicode(self.updateDateTime.isoformat() + "Z")
+        delete_keys(city, ['geoloc'])
+        city = dict_to_xml(city, "city")
+        return city
+
+class Provider(Base):
+    shortName = db.StringProperty(required=True)
+    fullName = db.StringProperty(required=True)
+    cityRef = db.ReferenceProperty(City, required=True)
+    locationsUpdated = db.DateTimeProperty(required=True)
+    
+    @property
+    def latitude(self):
+        return self.cityRef.geoloc.lat
+    @property
+    def longitude(self):
+        return self.cityRef.geoloc.lon
     
     def to_xml(self):
-        doc = Document()
-        city = doc.createElement("city")
-        id_ = doc.createElement(u"id")
-        id_.appendChild(doc.createTextNode(unicode(self.key().id())))
-        name = doc.createElement(u"name")
-        name.appendChild(doc.createTextNode(unicode(self.name)))
-        country = doc.createElement(u"country")
-        country.appendChild(doc.createTextNode(unicode(self.country)))
-        latitude = doc.createElement(u"latitude")
-        latitude.appendChild(doc.createTextNode(unicode(self.geoloc.lat)))
-        longitude = doc.createElement(u"longitude")
-        longitude.appendChild(doc.createTextNode(unicode(self.geoloc.lon)))
-        creationDatetime = doc.createElement(u"creationDateTime")
-        creationDatetime.appendChild(doc.createTextNode(unicode(self.updateDatetime.isoformat()+ "Z")))
-        updateDatetime = doc.createElement(u"updateDateTime")
-        updateDatetime.appendChild(doc.createTextNode(unicode(self.updateDatetime.isoformat() + "Z")))
-        city.appendChild(id_)
-        city.appendChild(name)
-        city.appendChild(country)
-        city.appendChild(latitude)
-        city.appendChild(longitude)
-        city.appendChild(creationDatetime)
-        city.appendChild(updateDatetime)
-        return city
+        provider = model_to_dict(self)
+        provider['creationDateTime'] = unicode(self.updateDateTime.isoformat()+ "Z")
+        provider['updateDateTime'] = unicode(self.updateDateTime.isoformat() + "Z")
+        provider['locationsUpdated'] = unicode(self.locationsUpdated.isoformat() + "Z")
+        provider['cityId'] = self.cityRef.key().id()
+        delete_keys(provider, ['cityRef','geoloc'])
+        provider = dict_to_xml(provider, "provider")
+        return provider
+    def __unicode__(self):
+        return self.shortName
+
+
+class BikeStation(Positionable):
+    name = db.StringProperty(required=True)
+    providerRef = db.ReferenceProperty(Provider, required=True)
+    description = db.StringProperty(required=True)
+    
+    @property
+    def latitude(self):
+        return self.providerRef.latitude
+    @property
+    def longitude(self):
+        return self.providerRef.longitude
+    
+    def to_xml(self):
+        station = model_to_dict(self)
+        station['creationDateTime'] = unicode(self.updateDateTime.isoformat()+ "Z")
+        station['updateDateTime'] = unicode(self.updateDateTime.isoformat() + "Z")
+        station['providerId'] = self.providerRef.key().id()
+        station['cityId'] = self.providerRef.cityRef.key().id()
+        station['latitude'] = self.latitude
+        station['longitude'] = self.longitude
+        delete_keys(station, ['providerRef', 'geoloc'])
+        station = dict_to_xml(station, "station")
+        return station
+    def __unicode__(self):
+        return self.name

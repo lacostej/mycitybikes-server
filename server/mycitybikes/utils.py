@@ -4,6 +4,28 @@ import types
 import os
 from google.appengine.api.datastore_types import GeoPt
 from google.appengine.ext.db import polymodel
+from xml.dom.minidom import Document
+
+def delete_keys(dct, keys):
+    for key in keys:
+        if dct.has_key(key):
+            del(dct[key])
+
+def model_to_dict(obj):
+    result = dict([(key, getattr(obj, key)) for key in obj.properties()])
+    result['id'] = obj.key().id()
+    del(result['_class'])
+    return result
+
+def dict_to_xml(dct, node_name):
+    doc = Document()
+    node = doc.createElement(unicode(node_name))
+    for k,v in dct.items():
+        e = doc.createElement(unicode(k))
+        e.appendChild(doc.createTextNode(unicode(v)))
+        node.appendChild(e)
+    return node
+    
 def flatten(obj, depth=0):
     """
     Thank you to the author at http://python-rest.googlecode.com for this.

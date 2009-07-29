@@ -9,7 +9,7 @@ from mycitybikes.mycitybikes import *
 # change the server you're talking to
 #MyCityBikes.setServerRoot("http://localhost/v1/")
 #MyCityBikes.setServerRoot("http://190.186.22.131")
-
+MyCityBikes.setServerRoot("http://localhost")
 # used to reset the server root
 #MyCityBikes.setServerRoot()
 
@@ -47,7 +47,7 @@ def showStationStatuses(stationsStatuses):
 cities = MyCityBikes.getCities()
 showCities(cities)
 
-osloId = 1
+osloId = "1"
 oslo = MyCityBikes.getCity(osloId)
 
 showCity(oslo)
