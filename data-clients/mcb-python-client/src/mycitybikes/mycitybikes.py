@@ -65,6 +65,10 @@ class MyCityBikes:
         stationId = subNode.text
       if (subNode.tag == "cityId"):
         cityId = subNode.text
+      if (subNode.tag == "externalId"):
+        externalId = subNode.text
+      if (subNode.tag == "name"):
+        name = subNode.text
       if (subNode.tag == "description"):
         description = subNode.text
       if (subNode.tag == "latitude"):
@@ -75,7 +79,7 @@ class MyCityBikes:
         creationDateTime = parse(subNode.text)
       if (subNode.tag == "updateDateTime"):
         updateDateTime = parse(subNode.text)
-    return Station(stationId, cityId, description, latitude, longitude, creationDateTime, updateDateTime)
+    return Station(stationId, cityId, externalId, name, description, latitude, longitude, creationDateTime, updateDateTime)
 
   # @param an Element representing the StationStatus
   # @return a StationStatus object representing the specified stationStatusNode
@@ -166,9 +170,11 @@ class City:
     self.updateDateTime = updateDateTime
 
 class Station:
-  def __init__(self, id, cityId, description, latitude, longitude, creationDateTime=None, updateDateTime=None):
+  def __init__(self, id, cityId, externalId, name, description, latitude, longitude, creationDateTime=None, updateDateTime=None):
     self.id = id
     self.cityId = cityId
+    self.externalId = externalId
+    self.name = name
     self.description = description
     self.latitude = latitude
     self.longitude = longitude
@@ -178,12 +184,23 @@ class Station:
   def to_xml(self):
     output = []
     output.append("<station>")
-    output.append("<id>")
-    output.append(self.id)
-    output.append("</id>")
+    # FIXME this won't be necessary once we make the reconciliation happen on the client
+    if (self.id != None):
+      output.append("<id>")
+      output.append(self.id)
+      output.append("</id>")
     output.append("<cityId>")
     output.append(self.cityId)
     output.append("</cityId>")
+    output.append("<externalId>")
+    output.append(self.externalId)
+    output.append("</externalId>")
+    if (self.name == None):
+      output.append("<name/>")
+    else:
+      output.append("<name>")
+      output.append(self.name)
+      output.append("</name>")
     output.append("<description>")
     output.append(self.description.encode("utf-8"))
     output.append("</description>")

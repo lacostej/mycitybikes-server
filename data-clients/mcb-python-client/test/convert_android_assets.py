@@ -16,14 +16,15 @@ def getStationsFromAndroidAssetFile(inputfile, providerId):
   for stationNode in rootNode:
     for subNode in stationNode:
       if (subNode.tag == "id"):
-        stationId = subNode.text
+        name = subNode.text
+        externalId = subNode.text
       elif (subNode.tag == "description"):
         description = subNode.text
       elif (subNode.tag == "longitude"):
         longitude = subNode.text
       elif (subNode.tag == "latitude"):
         latitude = subNode.text
-    stations.append(Station(stationId, providerId, description, latitude, longitude))
+    stations.append(Station(None, providerId, externalId, name, description, latitude, longitude))
   return stations
 
 def __usage():

@@ -11,7 +11,7 @@ def showCities(cities):
     showCity(city)
 
 def showStation(station):
-  print "Station id:%s\t%s\t%s\t(%s,%s)" % (station.id, station.cityId, station.description, station.latitude, station.longitude)
+  print "Station id:%s\t%s\t%s\t%s\t%s\t(%s,%s)" % (station.id, station.cityId, station.externalId, station.name, station.description, station.latitude, station.longitude)
 
 def showStations(stations):
   print "Found %s station(s)" % (len(stations))
