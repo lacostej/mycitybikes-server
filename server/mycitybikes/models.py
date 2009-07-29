@@ -16,7 +16,7 @@ class Positionable(Base):
 class City(Positionable):
   name = db.StringProperty(required=True)
   country = db.StringProperty(required=True)
-
+  externalId = db.StringProperty(required=True)
   def __unicode__(self):
     return '%s' % (self.name)
 
@@ -42,7 +42,7 @@ class Provider(Base):
   @property
   def longitude(self):
     return self.cityRef.geoloc.lon
-
+  
   def to_xml(self):
     provider = model_to_dict(self)
     provider['creationDateTime'] = unicode(self.updateDateTime.isoformat()+ "Z")
@@ -59,14 +59,18 @@ class BikeStation(Positionable):
   name = db.StringProperty(required=True)
   providerRef = db.ReferenceProperty(Provider, required=True)
   description = db.StringProperty(required=True)
-
+  externalId = db.StringProperty(required=False) # Ask about it
+  
   @property
   def latitude(self):
     return self.providerRef.latitude
   @property
   def longitude(self):
     return self.providerRef.longitude
-
+  @property
+  def city(self):
+    return self.providerRef.cityRef
+  
   def to_xml(self):
     station = model_to_dict(self)
     station['creationDateTime'] = unicode(self.updateDateTime.isoformat()+ "Z")
@@ -80,6 +84,17 @@ class BikeStation(Positionable):
     return station
   def __unicode__(self):
     return self.name
+
+class BikeStationStatus(Base):
+  stationRef = db.ReferenceProperty(BikeStation, required=True)
+  freeSlots = db.IntegerProperty(required=True)
+  availableBikes = db.IntegerProperty(required=True)
+  totalSlots = db.IntegerProperty(required=True)
+  
+  def __unicode__(self):
+    return self.stationRef.name
+
+
 """
   def to_xml(self):
   station = model_to_dict(self)

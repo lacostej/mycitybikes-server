@@ -5,17 +5,18 @@ from mycitybikes.views import *
 
 
 urlpatterns = patterns('mycitybikes.views',
-    (r'cities/$', 'list_cities'),
-    (r'cities\.xml$', 'list_cities'),
-    (r'cities/(\d+)\.xml$', 'get_city'),
-    (r'stations/$', 'list_stations'),
-    (r'stations/(\d+)\.xml$', 'get_station'),
-    (r'providers/city/(\d+)/all\.xml', 'list_providers_by_city'),
-    (r'stations/city/(\d+)/all\.xml', 'list_stations_by_city'),
+    (r'cities/$', 'cities_get'),
+    (r'cities\.xml$', 'cities_get'),
+    (r'cities/(\d+)\.xml$', 'city_get'),
+    (r'stations/$', 'stations_get'),
+    (r'stations/(\d+)\.xml$', 'station_get'),
+    (r'providers/city/(\d+)/all\.xml', 'providers_by_city_get'),
+    (r'stations/city/(\d+)/all\.xml', 'stations_by_city_get'),
+    (r'stations/city/(?P<cityId>\d+)/(?P<stationId>\d+)\.xml', 'station_by_city_get'),
     
 )
 
-
+"""
 urlpatterns += patterns('',
     mapping(r'^stations/city/(?P<cityId>\d+)/all.xml$', 'city_stations',
             city_stations_get),
@@ -27,3 +28,5 @@ urlpatterns += patterns('',
     url(r'cities.xml$', cities_get),
 
 )
+
+"""
