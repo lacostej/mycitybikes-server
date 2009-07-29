@@ -1,0 +1,1 @@
+export PYTHONPATH=`pwd`/src/:.:/usr/local/lib/python
