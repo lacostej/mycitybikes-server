@@ -23,18 +23,15 @@ from convert_android_assets import *
 # used to reset the server root
 #MyCityBikes.setServerRoot()
 
-
-
 cities = MyCityBikes.getCities()
 stockholm = cities[index(cities, lambda city: city.name == 'Stockholm')]
 
 # FIXME when we introduce Providers
+stockholmProviderId = stockholm.id
 #providers = MyCityBikes.getProviders()
 #stockholmProvider = providers[index(providers, lambda provider: provider.cityId == stockholm.id)]
 #showProvider(stockholmProvider)
 #stockholmProviderId = stockholmProvider.id
-
-stockholmProviderId = stockholm.id
 
 stations = getStationsFromAndroidAssetFile('assets/stockholm.xml', stockholmProviderId)
 
