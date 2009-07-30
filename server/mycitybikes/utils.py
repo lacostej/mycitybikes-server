@@ -5,6 +5,17 @@ import os
 from google.appengine.api.datastore_types import GeoPt
 from google.appengine.ext.db import polymodel
 from xml.dom.minidom import Document
+from ragendja.dbutils import get_object_or_404, to_json_data
+
+def obj2dict(obj, properties, exclude=None, extra={}):
+  """properties must be a dict or a list"""
+  if exclude:
+    if isinstance(properties, dict):
+      properties = properties.keys()
+    properties = set(properties) - set(exclude)
+  result = to_json_data(obj, properties)
+  result.update(extra)
+  return result
 
 def object_to_xml(obj, root_name=''):
   doc = Document()

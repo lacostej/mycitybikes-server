@@ -26,14 +26,14 @@ def stations_by_city_get(request, city_id):
   return HttpResponse(doc.toxml(), content_type="text/xml")
 
 def station_by_city_get(request, cityId, stationId):
-  city = get_object_or_404(City, id=int(cityId))  
-  station = city.provider_set.get().get_by_id(int(stationId))
-  if station:
+  city = get_object_or_404(City, id=int(cityId))
+  station = get_object_or_404(BikeStation, id=int(stationId))
+  if station.providerRef.cityRef == city:
     doc = utils.object_to_xml(station)
     return HttpResponse(doc.toxml(), content_type="text/xml")
   else:
     raise Http404
-
+  
 #City
 def cities_get(request):
   doc = utils.object_to_xml(City.all(), "cities")
@@ -59,6 +59,26 @@ def providers_by_city_get(request, city_id):
   city = get_object_or_404(City, id=int(city_id))
   doc = utils.object_to_xml(city.provider_set, "providers")
   return HttpResponse(doc.toxml(), content_type="text/xml")
+
+#Status
+def statuses_by_city_get(request, cityId):
+  city = get_object_or_404(City, id=int(cityId))
+  stations = itertools.chain(*[provider.bikestation_set for provider in city.provider_set])
+  statuses = itertools.chain(*[station.bikestationstatus_set for station in stations])
+  doc = utils.object_to_xml(statuses, "stationStatuses")
+  return HttpResponse(doc.toxml(), content_type="text/xml")
+
+def status_by_city_get(request, cityId, stationId):
+  city = get_object_or_404(City, id=int(cityId))
+  station = get_object_or_404(BikeStation, id=int(stationId))
+  if station.city == city:
+    status = station.bikestationstatus_set.get()
+    doc = utils.object_to_xml(status)
+    return HttpResponse(doc.toxml(), content_type="text/xml")
+  else:
+    raise Http404
+  
+
 
 """
 def city_get(request, cityId):
