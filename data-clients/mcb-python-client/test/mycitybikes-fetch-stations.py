@@ -11,7 +11,7 @@ from mycitybikes.utils import *
 # change the server you're talking to
 #MyCityBikes.setServerRoot("http://localhost:8000")
 #MyCityBikes.setServerRoot("http://190.186.22.131")
-
+MyCityBikes.setServerRoot("http://localhost")
 # used to reset the server root
 # MyCityBikes.setServerRoot()
 
@@ -21,6 +21,9 @@ from mycitybikes.utils import *
 cities = MyCityBikes.getCities()
 showCities(cities)
 
+
+#osloId = "1"
+#oslo = MyCityBikes.getCity(osloId)
 oslo = cities[index(cities, lambda city: city.name == 'Oslo')]
 
 # fetch again to test getCity
