@@ -63,8 +63,8 @@ class MyCityBikes:
     for subNode in stationNode:
       if (subNode.tag == "id"):
         stationId = subNode.text
-      if (subNode.tag == "cityId"):
-        cityId = subNode.text
+      if (subNode.tag == "providerId"):
+        providerId = subNode.text
       if (subNode.tag == "externalId"):
         externalId = subNode.text
       if (subNode.tag == "name"):
@@ -79,7 +79,7 @@ class MyCityBikes:
         creationDateTime = parse(subNode.text)
       if (subNode.tag == "updateDateTime"):
         updateDateTime = parse(subNode.text)
-    return Station(stationId, cityId, externalId, name, description, latitude, longitude, creationDateTime, updateDateTime)
+    return Station(stationId, providerId, externalId, name, description, latitude, longitude, creationDateTime, updateDateTime)
 
   # @param an Element representing the StationStatus
   # @return a StationStatus object representing the specified stationStatusNode
@@ -108,7 +108,7 @@ class MyCityBikes:
   def getCities():
     #print "using " + LL.info()
     xml = LL.getCities(MyCityBikes.serverRoot, None)
-    #print xml
+    print xml
     node = ET.XML(xml)
     cities = []
     for cityNode in node:
@@ -170,9 +170,9 @@ class City:
     self.updateDateTime = updateDateTime
 
 class Station:
-  def __init__(self, id, cityId, externalId, name, description, latitude, longitude, creationDateTime=None, updateDateTime=None):
+  def __init__(self, id, providerId, externalId, name, description, latitude, longitude, creationDateTime=None, updateDateTime=None):
     self.id = id
-    self.cityId = cityId
+    self.providerId = providerId
     self.externalId = externalId
     self.name = name
     self.description = description
@@ -189,9 +189,9 @@ class Station:
       output.append("<id>")
       output.append(self.id)
       output.append("</id>")
-    output.append("<cityId>")
-    output.append(self.cityId)
-    output.append("</cityId>")
+    output.append("<providerId>")
+    output.append(self.providerId)
+    output.append("</providerId>")
     output.append("<externalId>")
     output.append(self.externalId)
     output.append("</externalId>")
