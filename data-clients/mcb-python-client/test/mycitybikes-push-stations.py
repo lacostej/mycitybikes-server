@@ -22,6 +22,7 @@ from convert_android_assets import *
 
 # used to reset the server root
 #MyCityBikes.setServerRoot()
+MyCityBikes.setServerRoot("http://localhost")
 
 
 

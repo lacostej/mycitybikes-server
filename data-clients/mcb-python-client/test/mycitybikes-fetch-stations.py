@@ -12,6 +12,7 @@ from mycitybikes.utils import *
 #MyCityBikes.setServerRoot("http://localhost:8000")
 #MyCityBikes.setServerRoot("http://190.186.22.131")
 MyCityBikes.setServerRoot("http://localhost")
+#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com/")
 # used to reset the server root
 # MyCityBikes.setServerRoot()
 

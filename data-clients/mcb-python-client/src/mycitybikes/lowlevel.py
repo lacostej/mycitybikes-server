@@ -69,6 +69,8 @@ def setStations(serverRoot, providerId, stationsXml):
   h = httplib2.Http(".cache")
   url = serverRoot + "/stations/provider/" + str(providerId) + "/all.xml"
   print url
+  print "----------------------"
+  print stationsXml
   resp, content = h.request(url, "PUT", body=stationsXml, headers = {'content-type': 'text/xml'})
   if (resp.status != 200):
     print resp

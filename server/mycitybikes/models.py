@@ -2,9 +2,11 @@
 from django.utils.translation import ugettext_lazy as _
 from google.appengine.ext import db
 from google.appengine.ext.db import polymodel
-from google.appengine.ext import db
 from xml.dom.minidom import Document
-from utils import model_to_dict, dict_to_xml, delete_keys, obj2dict
+from utils import model_to_dict, dict_to_xml, delete_keys, obj2dict, xmlnode2dict
+from google.appengine.ext.db import djangoforms
+
+from mycitybikes.forms import *
 """
 class Base(db.Model):
   creationDateTime = db.DateTimeProperty(required=False, auto_now_add=True)
@@ -13,6 +15,13 @@ class Base(db.Model):
 class Positionable(Base):
   geoloc = db.GeoPtProperty(required=True)
 """
+
+
+class InvalidXML(Exception):
+  pass
+
+class InvalidXMLNode(Exception):
+  pass
 
 class City(db.Model):
   name = db.StringProperty(required=True)
@@ -101,6 +110,38 @@ class BikeStation(db.Model):
     station = obj2dict(self, self.properties(), exclude=['providerRef', 'geoloc'], extra=extra)
     station = dict_to_xml(station, "station")
     return station
+  
+  @staticmethod
+  def save_from_xml(xmltree):
+    if xmltree.tag != 'stations':
+      raise InvalidXML
+    stations = []
+    for node in xmltree:
+      if node.tag == 'station':
+        node = xmlnode2dict(node)
+        #if not contains_keys(node, ["id","description","latitude","longitude"]):
+        #  raise InvalidXMLNode
+        form = BikeStationForm(node)
+        if form.is_valid():
+          stations.append(form.get_model())
+        else:
+          raise InvalidXMLNode
+      else:
+        raise InvalidXMLNode
+    for station in stations:
+      station.put()
+  
+      
+      
+      
+class StationForm(djangoforms.ModelForm):
+  class Meta:
+    model = BikeStation
+    exclude = ['creationDateTime', 'updateDateTime', 'geoloc']
+
+
+
+  
 
 class BikeStationStatus(db.Model):
   stationRef = db.ReferenceProperty(BikeStation, required=True)
@@ -127,6 +168,10 @@ class BikeStationStatus(db.Model):
     station = obj2dict(self, self.properties(), exclude=['stationRef', 'geoloc'], extra=extra)
     station = dict_to_xml(station, "stationStatus") #stationStatuses
     return station
+  
+  def xml2model(self, node):
+    pass
+  
 """
   def to_xml(self):
   station = model_to_dict(self)
