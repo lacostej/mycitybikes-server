@@ -5,6 +5,8 @@ from mycitybikes.views import *
 
 
 urlpatterns = patterns('mycitybikes.views',
+#GET
+    (r'test/$', 'test'),
     (r'cities/$', 'cities_get'),
     (r'cities\.xml$', 'cities_get'),
     (r'cities/(\d+)\.xml$', 'city_get'),
@@ -15,6 +17,8 @@ urlpatterns = patterns('mycitybikes.views',
     (r'providers/city/(\d+)/all\.xml', 'providers_by_city_get'),
     (r'stationStatuses/city/(?P<cityId>\d+)/all\.xml', 'statuses_by_city_get'),
     (r'stationStatuses/city/(?P<cityId>\d+)/(?P<stationId>\d+)\.xml', 'status_by_city_get'),
+# PUT
+    (r'stations/provider/(\d+)/all\.xml', 'stations_put'),
 )
 
 """

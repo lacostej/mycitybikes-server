@@ -2,17 +2,43 @@
 from django.utils.translation import ugettext_lazy as _
 from google.appengine.ext import db
 from google.appengine.ext.db import polymodel
-from google.appengine.ext import db
 from xml.dom.minidom import Document
-from utils import model_to_dict, dict_to_xml, delete_keys, obj2dict
-"""
-class Base(db.Model):
-  creationDateTime = db.DateTimeProperty(required=False, auto_now_add=True)
-  updateDateTime = db.DateTimeProperty(required=False, auto_now=True)
+from utils import model_to_dict, dict_to_xml, delete_keys, obj2dict, xmlnode2dict
+#from mycitybikes.forms import *
+from django import forms
+from ragendja.dbutils import *
+from mycitybikes.forms import *
 
-class Positionable(Base):
-  geoloc = db.GeoPtProperty(required=True)
-"""
+class BikeStationForm(forms.Form):
+  providerId = forms.IntegerField()
+  description = forms.CharField()
+  latitude = forms.FloatField()
+  longitude = forms.FloatField()
+
+  def get_geoloc(self):
+    data = self.cleaned_data
+    return db.GeoPt(data['latitude'], data['longitude'])
+
+  def clean_providerId(self):
+    providerId = self.cleaned_data['providerId']
+    provider = Provider.get_by_id(providerId)
+    if not provider:
+      raise  forms.ValidationError("Provider ID doesn't exists")
+    self.cleaned_data['provider'] = provider
+    
+  def get_model(self):
+    data = self.cleaned_data
+    return BikeStation(providerRef=data['provider'],
+                       name=data['description'],
+                       description=data['description'],
+                       geoloc=self.get_geoloc(),
+                       externalId="111")
+
+class InvalidXML(Exception):
+  pass
+
+class InvalidXMLNode(Exception):
+  pass
 
 class City(db.Model):
   name = db.StringProperty(required=True)
@@ -101,6 +127,29 @@ class BikeStation(db.Model):
     station = obj2dict(self, self.properties(), exclude=['providerRef', 'geoloc'], extra=extra)
     station = dict_to_xml(station, "station")
     return station
+  
+  
+  @staticmethod
+  #@transaction
+  def save_from_xml(xmltree):
+    if xmltree.tag != 'stations':
+      raise InvalidXML
+    stations = []
+    for node in xmltree:
+      if node.tag == 'station':
+        node = xmlnode2dict(node)
+        #if not contains_keys(node, ["id","description","latitude","longitude"]):
+        #  raise InvalidXMLNode
+        node['providerId'] = 4 # MAGIC NUMBER
+        form = BikeStationForm(node)
+        if form.is_valid():
+          stations.append(form.get_model())
+        else:
+          raise InvalidXMLNode()
+      else:
+        raise InvalidXMLNode()
+    for station in stations:
+      station.put()
 
 class BikeStationStatus(db.Model):
   stationRef = db.ReferenceProperty(BikeStation, required=True)
@@ -127,6 +176,10 @@ class BikeStationStatus(db.Model):
     station = obj2dict(self, self.properties(), exclude=['stationRef', 'geoloc'], extra=extra)
     station = dict_to_xml(station, "stationStatus") #stationStatuses
     return station
+  
+  def xml2model(self, node):
+    pass
+  
 """
   def to_xml(self):
   station = model_to_dict(self)

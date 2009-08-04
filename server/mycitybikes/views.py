@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpResponseBadRequest
 from django.utils.translation import ugettext as _
 from ragendja.template import render_to_response
 from ragendja.dbutils import get_object_or_404, to_json_data
 from mycitybikes.models import *
 from mycitybikes import utils
 from xml.dom.minidom import Document
+import xml.etree.ElementTree as ET
 import logging
 import itertools
+
+def test(request):
+  
+  return HttpResponse(request.method)
 
 #Station
 def stations_get(request):
@@ -33,6 +38,29 @@ def station_by_city_get(request, cityId, stationId):
     return HttpResponse(doc.toxml(), content_type="text/xml")
   else:
     raise Http404
+
+def stations_put(request, id_n):
+  if request.method == "PUT":
+    data = request.raw_post_data
+    try:
+      xmltree = ET.XML(data)
+    except:
+      raise HttpResponseBadRequest
+    try:
+      BikeStation.save_from_xml(xmltree)
+    except InvalidXML:
+      return HttpResponseBadRequest("Invalid XML")
+    except InvalidXMLNode:
+      return HttpResponseBadRequest("Invalid XML Node")
+    else:
+      return HttpResponseBadRequest("Error")
+    return HttpResponse("OK")
+    #nodes = [utils.xmlnode2dict(node) for node in tree]
+# logging.info(data)
+# logging.info(dir(request))
+   
+    
+  
   
 #City
 def cities_get(request):
@@ -43,6 +71,7 @@ def city_get(request, city_id):
   city = get_object_or_404(City, id=int(city_id))
   doc = utils.object_to_xml(city)
   return HttpResponse(doc.toxml(), content_type="text/xml")
+
 
 #Provider
 
@@ -68,7 +97,7 @@ def statuses_by_city_get(request, cityId):
   doc = utils.object_to_xml(statuses, "stationStatuses")
   return HttpResponse(doc.toxml(), content_type="text/xml")
 
-def status_by_city_get(request, cityId, stationId):
+def status_by_city_get(request, cityId, stationId):#ask about it
   city = get_object_or_404(City, id=int(cityId))
   station = get_object_or_404(BikeStation, id=int(stationId))
   if station.city == city:

@@ -7,6 +7,20 @@ from google.appengine.ext.db import polymodel
 from xml.dom.minidom import Document
 from ragendja.dbutils import get_object_or_404, to_json_data
 
+def contains_keys(dct, keys):
+  for key in keys:
+    if not dct.has_key(key):
+      return False
+  return True
+
+"""Convert an xml node to dict"""
+def xmlnode2dict(node):
+  result = {}
+  for subnode in node:
+    result[subnode.tag] = subnode.text
+  return result
+    
+    
 def obj2dict(obj, properties, exclude=None, extra={}):
   """properties must be a dict or a list"""
   if exclude:
