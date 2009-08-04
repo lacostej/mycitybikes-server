@@ -139,23 +139,48 @@ ids = getStationIds(xml)
 #print x
 #print getStation("66", x)
 
-stationAndStatuses = []
-for id in ids:
-  # filter out invalid/test stations
-  if (int(id) >= 500): 
-    print "Skipping station " + id
-    continue
+def getStationsAndStatuses(providerId):
+  stationAndStatuses = []
+  for id in ids:
+    # filter out invalid/test stations
+    if (int(id) >= 500): 
+      print "Skipping station " + id
+      continue
 
-  stationXml = getStationInfoXml(id);
-  station = getStation(id, stationXml)
+    stationXml = getStationInfoXml(id);
+    station = getStation(id, stationXml)
 
-  stationStatus = StationStatus(None, None, station.status.online, station.status.readyBikes, station.status.emptyLocks, station.status.totalLocks(), None)
-  stationAndStatus = StationAndStatus(OSLO_PROVIDER_ID, station.externalId, None, station.description, station.latitude, station.longitude, stationStatus, datetime.utcnow())
-  stationAndStatuses.append(stationAndStatus)
+    stationStatus = StationStatus(None, None, station.status.online, station.status.readyBikes, station.status.emptyLocks, station.status.totalLocks(), None)
+    stationAndStatus = StationAndStatus(providerId, station.externalId, None, station.description, station.latitude, station.longitude, stationStatus, datetime.utcnow())
+    stationAndStatuses.append(stationAndStatus)
+  return stationAndStatuses
 
-# FIXME PUT that on the server
+def updateStationAndStatuses(providerId):
+  stationAndStatuses = getStationsAndStatuses(providerId)
+  MyCityBikes.putStationAndStatuses(providerId, stationAndStatuses)
 
-MyCityBikes.putStationAndStatuses(OSLO_PROVIDER_ID, stationAndStatuses)
+#def __usage():
+#  print "USAGE: " + sys.argv[0] + " providerId assetfilepath"
+#  print "\tproviderId\tthe id of the provider that manages the stations"
+#  print "\tassetfilepath\tthe path of the file containing the android client XML assets"
+
+if __name__ == "__main__":
+#  import sys
+#  if (len(sys.argv) < 2):
+#    print "ERROR: Missing providerId argument"
+#    __usage()
+#    exit()
+#  if (len(sys.argv) < 3):
+#    print "ERROR: Missing input filepath argument"
+#    __usage()
+#    exit()
+
+#  providerId = sys.argv[1]
+#  inputfile = sys.argv[2]
+
+  updateStationAndStatuses(OSLO_PROVIDER_ID)
+
+
 
   # algo estimates
   # 1 put for station and one for stationstatus every minute no matter what. ~100 stations, runs every minute i.e. 1500 time per day, 2 queries, would be 300 000 queries
