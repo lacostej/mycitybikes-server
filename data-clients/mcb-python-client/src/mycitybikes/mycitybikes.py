@@ -150,6 +150,15 @@ class MyCityBikes:
     node = ET.XML(xml)
     return MyCityBikes.__parseStationStatusNode(node)
 
+  def putStationAndStatuses(providerId, stationAndStatuses):
+    stationAndStatusesXml = []
+    stationAndStatusesXml.append("</stationAndstatuses>")
+    for stationAndStatus in stationAndStatuses:
+      stationAndStatusesXml.append(stationAndStatus.to_xml())
+    stationAndStatusesXml.append("</stationAndstatuses>")
+    putContent = "".join(stationAndStatusesXml)
+    LL.putStationAndStatuses(MyCityBikes.serverRoot, providerId, putContent)
+
   getCities = Callable(getCities)
   getCity = Callable(getCity)
   getStations = Callable(getStations)
@@ -157,6 +166,8 @@ class MyCityBikes:
   getStation = Callable(getStation)
   getStationStatuses = Callable(getStationStatuses)
   getStationStatus = Callable(getStationStatus)
+
+  putStationAndStatuses = Callable(putStationAndStatuses)
 
 
 class City:
@@ -235,10 +246,87 @@ class StationList:
   to_xml = Callable(to_xml)
 
 class StationStatus:
-  def __init__(self, cityId, stationId, availableBikes, freeSlots, totalSlots, updateDateTime):
-    self.cityId = cityId
+  def __init__(self, providerId, stationId, online, availableBikes, freeSlots, totalSlots, updateDateTime=None):
+    self.providerId = providerId
     self.stationId = stationId
     self.availableBikes = availableBikes
     self.freeSlots = freeSlots
     self.totalSlots = totalSlots
+    self.online = online
     self.updateDateTime = updateDateTime
+
+  def isOnline():
+    return online == "1"
+
+  def to_xml(self):
+    output = []
+    output.append("<stationStatus>")
+    if (not self.providerId == None):
+      output.append("<providerId>")
+      output.append(self.providerId)
+      output.append("</providerId>")
+    if (not self.stationId == None):
+      output.append("<stationId>")
+      output.append(self.stationId)
+      output.append("</stationId>")
+    if (not self.online == None):
+      output.append("<online>")
+      output.append(self.online)
+      output.append("</online>")
+    output.append("<availableBikes>")
+    output.append(self.availableBikes)
+    output.append("</availableBikes>")
+    output.append("<freeSlots>")
+    output.append(self.freeSlots)
+    output.append("</freeSlots>")
+    output.append("<totalSlots>")
+    output.append(self.totalSlots)
+    output.append("</totalSlots>")
+    if (self.updateDateTime != None):
+      output.append("<updateDateTime>")
+      output.append(self.updateDateTime)
+      output.append("</updateDateTime>")
+    output.append("</stationAndStatus>")
+    return ''.join(output)
+
+class StationAndStatus:
+  def __init__(self, providerId, externalId, name, description, latitude, longitude, stationStatus, updateDateTime):
+    self.providerId = providerId
+    self.externalId = externalId
+    self.name = name
+    self.description = description
+    self.latitude = latitude
+    self.longitude = longitude
+    self.updateDateTime = updateDateTime
+    self.stationStatus = stationStatus
+
+  def to_xml(self):
+    output = []
+    output.append("<stationAndStatus>")
+    output.append("<providerId>")
+    output.append(self.providerId)
+    output.append("</providerId>")
+    output.append("<externalId>")
+    output.append(self.externalId)
+    output.append("</externalId>")
+    if (self.name == None):
+      output.append("<name/>")
+    else:
+      output.append("<name>")
+      output.append(self.name)
+      output.append("</name>")
+    output.append("<description>")
+    output.append(self.description)
+    output.append("</description>")
+    output.append("<latitude>")
+    output.append(self.latitude)
+    output.append("</latitude>")
+    output.append("<longitude>")
+    output.append(self.longitude)
+    output.append("</longitude>")
+    output.append(str(self.stationStatus))
+    output.append("<updateDateTime>")
+    output.append(self.updateDateTime.isoformat()+ "Z")
+    output.append("</updateDateTime>")
+    output.append("</stationAndStatus>")
+    return ''.join(output)

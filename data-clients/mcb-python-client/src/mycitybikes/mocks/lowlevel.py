@@ -37,3 +37,6 @@ def getStationStatuses(serverRoot, cityId, stationIds=None):
 def getStationStatus(serverRoot, cityId, stationId):
   return __u(PROLOGUE+OSLO_STATION_STATUS_1 )
 
+def putStationAndStatuses(serverRoot, providerId, putContent):
+  print serverRoot + " putStationAndStatuses(" + providerId + ")"
+  print putContent

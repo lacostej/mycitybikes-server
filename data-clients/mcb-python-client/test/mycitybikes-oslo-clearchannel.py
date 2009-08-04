@@ -1,11 +1,18 @@
 #!/usr/bin/python
 # mycitybikes-oslo-clearchannel.py
 
-from mycitybikes import *
-
+from mycitybikes.mycitybikes import *
+from datetime import *
 import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
+
+OSLO_PROVIDER_ID="5"
+
+MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+
+# comment this out to test communication to the stubs
+MyCityBikes.enableMocks()
 
 print "Starting Oslo,ClearChannel synchronization"
 
@@ -50,9 +57,9 @@ def getStationIds(xml):
     ids.append(stationNode.text)
   return ids
 
-class Station:
-  def __init__(self, osloId, description, latitude, longitude, status):
-    self.osloId = osloId
+class OsloStation:
+  def __init__(self, externalId, description, latitude, longitude, status):
+    self.externalId = externalId
     self.description = description
     self.latitude = latitude
     self.longitude = longitude
@@ -63,21 +70,27 @@ class Station:
       statusStr = "No Status"
     else:
       statusStr = str(self.status)
-    l = [self.osloId, self.description, self.latitude, self.longitude, statusStr]
+    l = [self.externalId, self.description, self.latitude, self.longitude, statusStr]
     return "-".join(l)
 
-class StationStatus:
+class OsloStationStatus:
   def __init__(self, readyBikes, emptyLocks, online):
     self.readyBikes = readyBikes
     self.emptyLocks = emptyLocks
     self.online = online
+
+  def totalLocks(self):
+    """Return the totalSlots as a String"""
+    if (self.readyBikes == None):
+      return None
+    return (int(self.readyBikes) + int(self.emptyLocks))
 
   def __str__(self):
     l = [self.readyBikes, self.emptyLocks, self.online]
     return "Status(" + "-".join(l) + ")"
 
 
-def getStation(osloId, xml):
+def getStation(externalId, xml):
   """Return the station object for Oslo"""
   stringNode = ET.XML(xml)
   if not stringNode.tag == "{http://smartbikeportal.clearchannel.no/public/mobapp/}string":
@@ -93,8 +106,6 @@ def getStation(osloId, xml):
   for subNode in stationNode:
     if subNode.tag == "description":
       description = subNode.text.strip().encode("utf-8")
-#      print type(len(description))
-#      print type(description.find("-"))
       array = description.partition("-")
       if not len(array[1]) == 0:
         description = array[2]
@@ -111,10 +122,10 @@ def getStation(osloId, xml):
     else:
       raise McbException("Unexpected node in station: '" + subNode.tag + "'")
   if (readyBikes == None):
-    status = None
+    status = OsloStationStatus(None, None, "0")
   else:
-    status = StationStatus(readyBikes, emptyLocks, online)
-  return Station(osloId, description, latitude, longitude, status)
+    status = OsloStationStatus(readyBikes, emptyLocks, online)
+  return OsloStation(externalId, description, latitude, longitude, status)
 
 xml = getStationsXml()
 ids = getStationIds(xml)
@@ -128,11 +139,33 @@ ids = getStationIds(xml)
 #print x
 #print getStation("66", x)
 
+stationAndStatuses = []
 for id in ids:
-  station = getStationInfoXml(id);
-  # filter out unwanted stations
+  # filter out invalid/test stations
   if (int(id) >= 500): 
     print "Skipping station " + id
     continue
-  print getStation(id, station)
 
+  stationXml = getStationInfoXml(id);
+  station = getStation(id, stationXml)
+
+  stationStatus = StationStatus(None, None, station.status.online, station.status.readyBikes, station.status.emptyLocks, station.status.totalLocks(), None)
+  stationAndStatus = StationAndStatus(OSLO_PROVIDER_ID, station.externalId, None, station.description, station.latitude, station.longitude, stationStatus, datetime.utcnow())
+  stationAndStatuses.append(stationAndStatus)
+
+# FIXME PUT that on the server
+
+MyCityBikes.putStationAndStatuses(OSLO_PROVIDER_ID, stationAndStatuses)
+
+  # algo estimates
+  # 1 put for station and one for stationstatus every minute no matter what. ~100 stations, runs every minute i.e. 1500 time per day, 2 queries, would be 300 000 queries
+  # 1 put for all station and statuses at once ~100 stations, runs every minute, i.e. 1500 times per day
+
+  # FIXME add update timestamp
+  # 1. convert Station and its Status to mycibikes.BikeStation and StationStatus objects
+  # 2. put station and status online
+  # on server
+  # search station by providerId and externalId
+  #   if Station doesn't exist, create it
+  #   if Station exists, check the difference update it if necessary
+  # 3. IMPROVEMENT clean up old stations

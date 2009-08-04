@@ -134,3 +134,18 @@ def getStationStatus(serverRoot, cityId, stationId):
     # FIXME
     pass
   return content
+
+# @param serverRoot the url of the serverRoot
+# @param cityId the id of the city that contains the stations
+# @param stationId the id of the station to retrieve
+def putStationAndStatuses(serverRoot, providerId, putContent):
+  h = httplib2.Http(".cache")
+  url = serverRoot + "/stationAndStatuses/provider/" + str(providerId) + "/all.xml"
+  resp, content = h.request(url, "PUT", body=putContent, headers = {'content-type': 'text/xml'})
+  if (resp.status != 200):
+    # FIXME
+    pass
+  if (resp['content-type'] == 'text/xml'):
+    # FIXME
+    pass
+  return content
