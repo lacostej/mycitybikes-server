@@ -152,7 +152,7 @@ class MyCityBikes:
 
   def putStationAndStatuses(providerId, stationAndStatuses):
     stationAndStatusesXml = []
-    stationAndStatusesXml.append("</stationAndstatuses>")
+    stationAndStatusesXml.append("<stationAndstatuses>")
     for stationAndStatus in stationAndStatuses:
       stationAndStatusesXml.append(stationAndStatus.to_xml())
     stationAndStatusesXml.append("</stationAndstatuses>")
@@ -289,7 +289,7 @@ class StationStatus:
       output.append("<updateDateTime>")
       output.append(self.updateDateTime)
       output.append("</updateDateTime>")
-    output.append("</stationAndStatus>")
+    output.append("</stationStatus>")
     return ''.join(output)
 
 class StationAndStatus:
