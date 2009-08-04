@@ -18,7 +18,7 @@ urlpatterns = patterns('mycitybikes.views',
     (r'stationStatuses/city/(?P<cityId>\d+)/all\.xml', 'statuses_by_city_get'),
     (r'stationStatuses/city/(?P<cityId>\d+)/(?P<stationId>\d+)\.xml', 'status_by_city_get'),
 # PUT
-    (r'stations/provider/(\d+)/all\.xml', 'test_put'),
+    (r'stations/provider/(\d+)/all\.xml', 'stations_put'),
 )
 
 """

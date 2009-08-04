@@ -39,18 +39,23 @@ def station_by_city_get(request, cityId, stationId):
   else:
     raise Http404
 
-def test_put(request, id_n):
+def stations_put(request, id_n):
   if request.method == "PUT":
     data = request.raw_post_data
     try:
       xmltree = ET.XML(data)
     except:
       raise HttpResponseBadRequest
-    BikeStation.save_from_xml(xmltree)
+    try:
+      BikeStation.save_from_xml(xmltree)
+    except InvalidXML:
+      return HttpResponseBadRequest("Invalid XML")
+    except InvalidXMLNode:
+      return HttpResponseBadRequest("Invalid XML Node")
+    else:
+      return HttpResponseBadRequest("Error")
+    return HttpResponse("OK")
     #nodes = [utils.xmlnode2dict(node) for node in tree]
-    
-    
-    return HttpResponse(data)
 # logging.info(data)
 # logging.info(dir(request))
    
