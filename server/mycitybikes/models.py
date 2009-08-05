@@ -43,7 +43,6 @@ class InvalidXMLNode(Exception):
 class City(db.Model):
   name = db.StringProperty(required=True)
   country = db.StringProperty(required=True)
-  externalId = db.StringProperty(required=True)
   geoloc = db.GeoPtProperty(required=True)
   creationDateTime = db.DateTimeProperty(required=False, auto_now_add=True)
   updateDateTime = db.DateTimeProperty(required=False, auto_now=True)
