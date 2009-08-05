@@ -8,7 +8,7 @@ from utils import model_to_dict, dict_to_xml, delete_keys, obj2dict, xmlnode2dic
 from django import forms
 from ragendja.dbutils import *
 from mycitybikes.forms import *
-
+"""
 class BikeStationForm(forms.Form):
   providerId = forms.IntegerField()
   description = forms.CharField()
@@ -33,6 +33,7 @@ class BikeStationForm(forms.Form):
                        description=data['description'],
                        geoloc=self.get_geoloc(),
                        externalId="111")
+"""
 
 class InvalidXML(Exception):
   pass
@@ -130,7 +131,6 @@ class BikeStation(db.Model):
   
   
   @staticmethod
-  #@transaction
   def save_from_xml(xmltree):
     if xmltree.tag != 'stations':
       raise InvalidXML
@@ -153,9 +153,9 @@ class BikeStation(db.Model):
 
 class BikeStationStatus(db.Model):
   stationRef = db.ReferenceProperty(BikeStation, required=True)
-  freeSlots = db.IntegerProperty(required=True)
-  availableBikes = db.IntegerProperty(required=True)
-  totalSlots = db.IntegerProperty(required=True)
+  freeSlots = db.IntegerProperty(required=False)
+  availableBikes = db.IntegerProperty(required=False)
+  totalSlots = db.IntegerProperty(required=False)
   creationDateTime = db.DateTimeProperty(required=False, auto_now_add=True)
   updateDateTime = db.DateTimeProperty(required=False, auto_now=True)
   
