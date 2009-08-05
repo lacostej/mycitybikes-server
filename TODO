@@ -1,14 +1,27 @@
-* [VICTOR] finish to implement the Provider model and implementation
-* [VICTOR] investigate and fix Victor issue with test client
-* [VICTOR] deploy application to mycitybikes.appspot.com. Document briefly procedure for Jerome
-* [VICTOR] implement provider_stations_put
-* [JEROME] document the station status input data format
-* [VICTOR] implement provider_stations_status_put (start with a new test client and some input data)
-* [JEROME] define the new model for BikeStation (i.e. id, name, ...)
-* [JEROME] define the station reconciliation algo for data. Implement the algorythm for Norway and another city (washington ?)
+Week 32 goal:
+  * server: get the sync to work for oslo (data push)
 
-* [] remove public app-engine-patch references (e.g. http://mycitybikes.appspot.com/)
+* [] get proper data on server (city, provider). Note: model on appspot is invalid now that I removed externalId for old data. Maybe we can just flush it out (easier than upgrade the model)
+* [VICTOR] automate Oslo sync. Find a way to make our script run on the server (cron + fetch url, ...)
+* [VICTOR] implement get stationAndStatuses
+
+Week 33 goal:
+  * client: rewrite the android client against our new API
+  * server: clean up model&code, support more cities, 
+
+* test automation
+* clean up / refactor
+* [JEROME] update android client to match new API
+* [VICTOR] implement Paris client
+* implement Barcelona
+* implement Washington
+
+Week 34 goal: 
+  * client: iphone support alpha
+  * server support history, design
 
 
 FUTURE
 * do we need to keep track of timezone ? Maybe in city
+* remove public app-engine-patch references (e.g. http://mycitybikes.appspot.com/)
+
