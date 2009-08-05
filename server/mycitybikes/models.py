@@ -23,7 +23,7 @@ class BikeStationForm(forms.Form):
     providerId = self.cleaned_data['providerId']
     provider = Provider.get_by_id(providerId)
     if not provider:
-      raise  forms.ValidationError("Provider ID doesn't exists")
+      raise  forms.ValidationError("Provider ID doesn't exist")
     self.cleaned_data['provider'] = provider
     
   def get_model(self):
