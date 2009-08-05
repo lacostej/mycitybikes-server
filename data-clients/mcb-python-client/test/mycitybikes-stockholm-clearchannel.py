@@ -7,10 +7,11 @@ import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
-MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+MyCityBikes.setServerRoot("http://localhost")
 
 # comment this out to test communication to the stubs
-MyCityBikes.enableMocks()
+#MyCityBikes.enableMocks()
 
 print "Starting Oslo,ClearChannel synchronization"
 

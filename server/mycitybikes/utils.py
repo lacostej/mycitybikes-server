@@ -17,7 +17,12 @@ def contains_keys(dct, keys):
 def xmlnode2dict(node):
   result = {}
   for subnode in node:
-    result[subnode.tag] = subnode.text
+    children = subnode.getchildren()
+    if children:
+      result[subnode.tag] = xmlnode2dict(subnode)
+    else:
+      result[subnode.tag] = subnode.text
+    
   return result
     
     

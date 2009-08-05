@@ -144,6 +144,8 @@ def putStationAndStatuses(serverRoot, providerId, putContent):
   h = httplib2.Http(".cache")
   url = serverRoot + "/stationAndStatuses/provider/" + str(providerId) + "/all.xml"
   resp, content = h.request(url, "PUT", body=putContent, headers = {'content-type': 'text/xml'})
+  print "======================================="
+  print content
   if (resp.status != 200):
     # FIXME
     pass
