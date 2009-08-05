@@ -46,12 +46,12 @@ def stations_put(request, id_n):
       raise HttpResponseBadRequest
     try:
       save_station_status(xmltree)
-    except InvalidXML:
-      return HttpResponseBadRequest("Invalid XML")
-    except InvalidXMLNode:
-      return HttpResponseBadRequest("Invalid XML Node")
+    except InvalidXML, e:
+      return HttpResponseBadRequest(e.message)
+    except InvalidXMLNode, e:
+      return HttpResponseBadRequest(e.message)
     except Exception, e: 
-      return HttpResponse(e)
+      return HttpResponse(e.message)
     return HttpResponse("OK")
   else:
     return HttpResponse("ERROR")
