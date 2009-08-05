@@ -9,7 +9,8 @@ from StringIO import StringIO
 
 OSLO_PROVIDER_ID="5"
 
-MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+MyCityBikes.setServerRoot("http://localhost/")
 
 # comment this out to test communication to the stubs
 MyCityBikes.enableMocks()

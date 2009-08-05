@@ -3,50 +3,14 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404, HttpRespons
 from django.utils.translation import ugettext as _
 from ragendja.template import render_to_response
 from ragendja.dbutils import get_object_or_404, to_json_data
-from mycitybikes.models import *
 from mycitybikes import utils
+from mycitybikes.models import *
+from mycitybikes.forms import *
 from google.appengine.ext import db
 from xml.dom.minidom import Document
 import xml.etree.ElementTree as ET
 import logging
 import itertools
-class BikeStationForm(forms.Form):
-  providerId = forms.IntegerField(min_value=0)
-  name = forms.CharField(required=False, )
-  description = forms.CharField(required=False)
-  latitude = forms.FloatField()
-  longitude = forms.FloatField()
-  #updateDateTime = forms.RegexField() # TODO write the regex to match time isoformat
-  def get_geoloc(self):
-    data = self.cleaned_data
-    return db.GeoPt(data['latitude'], data['longitude'])
-
-  def clean_providerId(self):
-    providerId = self.cleaned_data['providerId']
-    provider = Provider.get_by_id(providerId)
-    if not provider:
-      raise  forms.ValidationError("Provider ID doesn't exists")
-    self.cleaned_data['provider'] = provider
-    
-  def get_model(self):
-    data = self.cleaned_data
-    return BikeStation(providerRef=data['provider'],
-                       name=data['description'],
-                       description=data['description'],
-                       geoloc=self.get_geoloc(),
-                       externalId="111")
-  
-class StatusForm(forms.Form):
-  online = forms.IntegerField(required=True, min_value=0)
-  availableBikes = forms.IntegerField(required=False, min_value=0)
-  freeSlots = forms.IntegerField(required=False, min_value=0)
-  totalSlots = forms.IntegerField(required=False, min_value=0)
-  
-  def get_model(self,station):
-    data = self.cleaned_data
-    return BikeStationStatus(stationRef=station,
-                             availableBikes=data['availableBikes'],
-                             freeSlots=data['freeSlots'], totalSlots=data['totalSlots'])
 
 #Station
 def stations_get(request):
@@ -81,7 +45,6 @@ def stations_put(request, id_n):
     except:
       raise HttpResponseBadRequest
     try:
-      #BikeStation.save_from_xml(xmltree)
       save_station_status(xmltree)
     except InvalidXML:
       return HttpResponseBadRequest("Invalid XML")
@@ -92,10 +55,7 @@ def stations_put(request, id_n):
     return HttpResponse("OK")
   else:
     return HttpResponse("ERROR")
-    #nodes = [utils.xmlnode2dict(node) for node in tree]
-# logging.info(data)
-# logging.info(dir(request))
-  
+
   
 #City
 def cities_get(request):
@@ -141,31 +101,26 @@ def status_by_city_get(request, cityId, stationId):#ask about it
     return HttpResponse(doc.toxml(), content_type="text/xml")
   else:
     raise Http404
-  
-
 
 def save_station_status(xmltree):
+#TODO make it works for single station  
   if xmltree.tag != 'stationAndstatuses':
     raise InvalidXML
-  stations_statuses = []
+  stations = []
+  statuses = []
   for node in xmltree:
-    if node.tag == 'stationAndStatus':
-      node = xmlnode2dict(node)
-      #node['providerId'] = 4 # MAGIC NUMBER
-      station_form = BikeStationForm(node)
-      status_form = StatusForm(node.get('stationStatus',{}))
-      if station_form.is_valid() and status_form.is_valid():
-        #if node.has_key('stationStatus'):
-        station = station_form.get_model()
-        stations_statuses.append((station, status_form))
-      else:
-        raise InvalidXMLNode()
-    else:
-      raise InvalidXMLNode()
-  for station, status in stations_statuses:
-    station.put()
-    status = status.get_model(station)
-    status.save()
+    if node.tag != 'stationAndStatus':
+      raise InvalidXMLNode("Expected stationAndstatuses but got %s" % xmltree.tag)
+    node = xmlnode2dict(node)
+    station_form = BikeStationForm(node)
+    status_form = StatusForm(node.get('stationStatus',{}))
+    if not station_form.is_valid() or not status_form.is_valid():
+      raise InvalidXMLNode(node)
+    stations.append(station_form.get_model())
+    statuses.append(status_form)
+  db.put(stations)
+  statuses = [status.get_model(station) for station, status in zip(stations, statuses)]
+  db.put(statuses)
   
 """
 def city_get(request, cityId):
