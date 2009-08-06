@@ -7,13 +7,14 @@ import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
-OSLO_PROVIDER_ID="5"
+#OSLO_PROVIDER_ID="5"
+OSLO_PROVIDER_ID="4"
 
 #MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
-MyCityBikes.setServerRoot("http://localhost/")
+MyCityBikes.setServerRoot("http://localhost")
 
 # comment this out to test communication to the stubs
-MyCityBikes.enableMocks()
+#MyCityBikes.enableMocks()
 
 print "Starting Oslo,ClearChannel synchronization"
 
@@ -84,7 +85,7 @@ class OsloStationStatus:
     """Return the totalSlots as a String"""
     if (self.readyBikes == None):
       return None
-    return (int(self.readyBikes) + int(self.emptyLocks))
+    return unicode(int(self.readyBikes) + int(self.emptyLocks))
 
   def __str__(self):
     l = [self.readyBikes, self.emptyLocks, self.online]
@@ -106,7 +107,7 @@ def getStation(externalId, xml):
   readyBikes = None
   for subNode in stationNode:
     if subNode.tag == "description":
-      description = subNode.text.strip().encode("utf-8")
+      description = subNode.text.strip().replace("&", "&amp;").encode("utf-8")
       array = description.partition("-")
       if not len(array[1]) == 0:
         description = array[2]

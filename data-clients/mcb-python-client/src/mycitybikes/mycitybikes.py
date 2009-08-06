@@ -319,7 +319,7 @@ class StationAndStatus:
       output.append(self.name)
       output.append("</name>")
     output.append("<description>")
-    output.append(self.description.encode("utf-8"))
+    output.append(unicode(self.description,"utf-8"))
     output.append("</description>")
     output.append("<latitude>")
     output.append(self.latitude)

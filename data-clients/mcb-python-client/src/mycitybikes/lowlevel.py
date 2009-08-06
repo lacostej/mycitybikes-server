@@ -1,6 +1,5 @@
 import httplib2
 
-
 def info():
   return "lowlevel mycitybikes lib"
 
@@ -142,6 +141,7 @@ def getStationStatus(serverRoot, cityId, stationId):
 # @param stationId the id of the station to retrieve
 def putStationAndStatuses(serverRoot, providerId, putContent):
   h = httplib2.Http(".cache")
+  putContent = putContent.encode('utf-8')
   url = serverRoot + "/stationAndStatuses/provider/" + str(providerId) + "/all.xml"
   resp, content = h.request(url, "PUT", body=putContent, headers = {'content-type': 'text/xml'})
   print "======================================="

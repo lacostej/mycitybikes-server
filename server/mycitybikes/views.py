@@ -31,11 +31,11 @@ def stations_by_city_get(request, city_id):
 def station_by_city_get(request, cityId, stationId):
   city = get_object_or_404(City, id=int(cityId))
   station = get_object_or_404(BikeStation, id=int(stationId))
-  if station.providerRef.cityRef == city:
-    doc = utils.object_to_xml(station)
-    return HttpResponse(doc.toxml(), content_type="text/xml")
-  else:
+  if station.providerRef.cityRef != city:
     raise Http404
+  doc = utils.object_to_xml(station)
+  return HttpResponse(doc.toxml(), content_type="text/xml")
+    
 
 def stations_put(request, id_n):
   if request.method == "PUT":
@@ -44,15 +44,18 @@ def stations_put(request, id_n):
       xmltree = ET.XML(data)
     except:
       raise HttpResponseBadRequest
+    
     try:
       save_station_status(xmltree)
+      return HttpResponse("OK")
     except InvalidXML, e:
       return HttpResponseBadRequest(e.message)
     except InvalidXMLNode, e:
       return HttpResponseBadRequest(e.message)
     except Exception, e: 
       return HttpResponse(e.message)
-    return HttpResponse("OK")
+    return HttpResponse("ERRORX")
+    
   else:
     return HttpResponse("ERROR")
 
@@ -95,12 +98,12 @@ def statuses_by_city_get(request, cityId):
 def status_by_city_get(request, cityId, stationId):#ask about it
   city = get_object_or_404(City, id=int(cityId))
   station = get_object_or_404(BikeStation, id=int(stationId))
-  if station.city == city:
-    status = station.bikestationstatus_set.get()
-    doc = utils.object_to_xml(status)
-    return HttpResponse(doc.toxml(), content_type="text/xml")
-  else:
+  if station.city != city:
     raise Http404
+  status = station.bikestationstatus_set.get()
+  doc = utils.object_to_xml(status)
+  return HttpResponse(doc.toxml(), content_type="text/xml")
+    
 
 def save_station_status(xmltree):
 #TODO make it works for single station  

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # mycitybikes-stockholm-clearchannel.py
 
 from mycitybikes.mycitybikes import *
@@ -11,7 +12,7 @@ from StringIO import StringIO
 MyCityBikes.setServerRoot("http://localhost")
 
 # comment this out to test communication to the stubs
-#MyCityBikes.enableMocks()
+MyCityBikes.enableMocks()
 
 print "Starting Oslo,ClearChannel synchronization"
 
