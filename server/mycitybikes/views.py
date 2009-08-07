@@ -37,8 +37,10 @@ def station_by_city_get(request, cityId, stationId):
   return HttpResponse(doc.toxml(), content_type="text/xml")
     
 
-def stations_put(request, id_n):
+def stations_put(request, providerId):
   if request.method == "PUT":
+    provider = get_object_or_404(Provider, id=int(providerId))
+    
     data = request.raw_post_data
     try:
       xmltree = ET.XML(data)
@@ -46,7 +48,7 @@ def stations_put(request, id_n):
       raise HttpResponseBadRequest
     
     try:
-      save_station_status(xmltree)
+      save_station_status(xmltree, provider)
       return HttpResponse("OK")
     except InvalidXML, e:
       return HttpResponseBadRequest(e.message)
@@ -105,7 +107,7 @@ def status_by_city_get(request, cityId, stationId):#ask about it
   return HttpResponse(doc.toxml(), content_type="text/xml")
     
 
-def save_station_status(xmltree):
+def save_station_status(xmltree, provider):
 #TODO make it works for single station  
   if xmltree.tag != 'stationAndstatuses':
     raise InvalidXML
@@ -115,7 +117,7 @@ def save_station_status(xmltree):
     if node.tag != 'stationAndStatus':
       raise InvalidXMLNode("Expected stationAndstatuses but got %s" % xmltree.tag)
     node = xmlnode2dict(node)
-    station_form = BikeStationForm(node)
+    station_form = BikeStationForm(node, provider)
     status_form = StatusForm(node.get('stationStatus',{}))
     if not station_form.is_valid() or not status_form.is_valid():
       raise InvalidXMLNode(node)

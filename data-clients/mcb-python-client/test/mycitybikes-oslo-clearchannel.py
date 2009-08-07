@@ -8,10 +8,10 @@ import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
 #OSLO_PROVIDER_ID="5"
-OSLO_PROVIDER_ID="4"
+OSLO_PROVIDER_ID="5"
 
 #MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
-MyCityBikes.setServerRoot("http://localhost")
+MyCityBikes.setServerRoot("http://localhost:9000")
 
 # comment this out to test communication to the stubs
 #MyCityBikes.enableMocks()
