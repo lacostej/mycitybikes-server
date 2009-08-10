@@ -87,6 +87,12 @@ class BikeStation(db.Model):
   def city(self):
     return self.providerRef.cityRef
   
+  @property
+  def status(self):
+    status = self.bikestationstatus_set.fetch(1)
+    
+    return status[0] if len(status)>0 else None
+  
   def to_xml(self):
     extra = dict(id=self.key().id(),
              latitude=self.geoloc.lat, 

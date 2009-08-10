@@ -56,7 +56,7 @@ def stations_put(request, providerId):
       return HttpResponseBadRequest(e.message)
     except Exception, e: 
       return HttpResponse(e.message)
-    return HttpResponse("ERRORX")
+    return HttpResponse("ERROR")
     
   else:
     return HttpResponse("ERROR")
@@ -97,7 +97,7 @@ def statuses_by_city_get(request, cityId):
   doc = utils.object_to_xml(statuses, "stationStatuses")
   return HttpResponse(doc.toxml(), content_type="text/xml")
 
-def status_by_city_get(request, cityId, stationId):#ask about it
+def status_by_station_get(request, cityId, stationId):#ask about it
   city = get_object_or_404(City, id=int(cityId))
   station = get_object_or_404(BikeStation, id=int(stationId))
   if station.city != city:
@@ -126,38 +126,15 @@ def save_station_status(xmltree, provider):
   db.put(stations)
   statuses = [status.get_model(station) for station, status in zip(stations, statuses)]
   db.put(statuses)
+
+
+def statuses_by_provider_get(request, providerId):
+  provider = get_object_or_404(Provider, id=int(providerId))
+  statuses = []
+  for station in provider.bikestation_set:
+    station_status = station.status
+    if station_status:
+      statuses.append(station_status)
+  doc = utils.object_to_xml(statuses, "stationStatuses")
+  return HttpResponse(doc.toxml(), content_type="text/xml")  
   
-"""
-def city_get(request, cityId):
-  city = City.get_by_id(int(cityId))
-  logging.info(city.to_xml().toxml())
-  return HttpResponse(city.to_xml().toxml(), content_type="text/xml")
-
-def provider_stations_put(request, providerId):
-  logging.info(request.raw_post_data)
-
-  # FIXME we need to map name to id or introduce an externalId field
-
-#    stations = BikeStation.from_xml(request.raw_post_data)
-#    for station in stations:
-#        station = BikeStation.get_by_id(station.key().id())
-
-  return HttpResponse('')
-
-def provider_stations_get(request, providerId):
-  doc = Document()
-  root = doc.createElement(u"stations")
-  for station in BikeStation.all().filter("providerRef = ", providerId):
-    root.appendChild(station.to_xml())
-  doc.appendChild(root)
-  return HttpResponse(doc.toxml(), content_type="text/xml")
-
-def city_stations_get(request, cityId):
-  doc = Document()
-  root = doc.createElement(u"stations")
-  for station in BikeStation.all():
-    root.appendChild(station.to_xml())
-  doc.appendChild(root)
-  return HttpResponse(doc.toxml(), content_type="text/xml")
-
-"""
