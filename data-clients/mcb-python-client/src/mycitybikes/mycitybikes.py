@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 import lowlevel as LL
 from StringIO import StringIO
+from utils import *
+from display import *
 
 # pyXML (python-xml in debian/ubuntu)
 
@@ -57,6 +59,26 @@ class MyCityBikes:
         updateDateTime = parse(subNode.text)
     return City(id, name, country, latitude, longitude, creationDateTime, updateDateTime)
 
+  # @param an Element representing the Provider
+  # @return a Provider object representing the specified providerNode
+  def __parseProviderNode(node):
+    for subNode in node:
+      if (subNode.tag == "id"):
+        id = subNode.text
+      if (subNode.tag == "cityId"):
+        cityId = subNode.text
+      if (subNode.tag == "shortName"):
+        shortName = subNode.text
+      if (subNode.tag == "fullName"):
+        fullName = subNode.text
+      if (subNode.tag == "locationsUpdated"):
+        locationsUpdated = subNode.text
+      if (subNode.tag == "creationDateTime"):
+        creationDateTime = parse(subNode.text)
+      if (subNode.tag == "updateDateTime"):
+        updateDateTime = parse(subNode.text)
+    return Provider(id, cityId, shortName, fullName, locationsUpdated, creationDateTime, updateDateTime)
+
   # @param an Element representing the Station
   # @return a Station object representing the specified stationNode
   def __parseStationNode(stationNode):
@@ -102,18 +124,37 @@ class MyCityBikes:
     return StationStatus(cityId, stationId, availableBikes, freeSlots, totalSlots, updateDateTime)
 
   __parseCityNode = Callable(__parseCityNode)
+  __parseProviderNode = Callable(__parseProviderNode)
   __parseStationNode = Callable(__parseStationNode)
   __parseStationStatusNode = Callable(__parseStationStatusNode)
 
   def getCities():
     #print "using " + LL.info()
     xml = LL.getCities(MyCityBikes.serverRoot, None)
-    print xml
+#    print xml
     node = ET.XML(xml)
     cities = []
     for cityNode in node:
       cities.append(MyCityBikes.__parseCityNode(cityNode))
     return cities
+
+  def getProviders():
+    xml = LL.getProviders(MyCityBikes.serverRoot)
+#    print xml
+    node = ET.XML(xml)
+    providers = []
+    for providerNode in node:
+      providers.append(MyCityBikes.__parseProviderNode(providerNode))
+    return providers
+
+  def getProviderForCity(cityName):
+    providers = MyCityBikes.getProviders()
+    cities = MyCityBikes.getCities()
+#    showCities(cities)
+#    showProviders(providers)
+    cityIdx = index(cities, lambda city: city.name == cityName)
+    providerIdx = index(providers, lambda provider: provider.cityId == cities[cityIdx].id)
+    return providers[providerIdx]
 
   def getCity(cityId):
     xml = LL.getCity(MyCityBikes.serverRoot, cityId)
@@ -166,6 +207,8 @@ class MyCityBikes:
   getStation = Callable(getStation)
   getStationStatuses = Callable(getStationStatuses)
   getStationStatus = Callable(getStationStatus)
+  getProviders = Callable(getProviders)
+  getProviderForCity = Callable(getProviderForCity)
 
   putStationAndStatuses = Callable(putStationAndStatuses)
 
@@ -177,6 +220,16 @@ class City:
     self.country = country
     self.latitude = latitude
     self.longitude = longitude
+    self.creationDateTime = creationDateTime
+    self.updateDateTime = updateDateTime
+
+class Provider:
+  def __init__(self, id, cityId, shortName, fullName, locationsUpdated, creationDateTime, updateDateTime):
+    self.id = id
+    self.cityId = cityId
+    self.shortName = shortName
+    self.fullName = fullName
+    self.locationsUpdated = locationsUpdated
     self.creationDateTime = creationDateTime
     self.updateDateTime = updateDateTime
 
@@ -319,7 +372,7 @@ class StationAndStatus:
       output.append(self.name)
       output.append("</name>")
     output.append("<description>")
-    output.append(unicode(self.description,"utf-8"))
+    output.append(self.description)
     output.append("</description>")
     output.append("<latitude>")
     output.append(self.latitude)

@@ -6,7 +6,7 @@ from mycitybikes.display import *
 from mycitybikes.utils import *
 
 # comment this out to test communication to the stubs
-# MyCityBikes.enableMocks()
+#MyCityBikes.enableMocks()
 
 # change the server you're talking to
 MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
@@ -22,6 +22,12 @@ MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
 cities = MyCityBikes.getCities()
 showCities(cities)
 
+providers = MyCityBikes.getProviders()
+showProviders(providers)
+
+provider = MyCityBikes.getProviderForCity("Oslo")
+print "show provider for Oslo"
+showProvider(provider)
 
 oslo = cities[index(cities, lambda city: city.name == 'Oslo')]
 

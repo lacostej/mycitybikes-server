@@ -7,11 +7,10 @@ import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
-#OSLO_PROVIDER_ID="5"
-OSLO_PROVIDER_ID="5"
+MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+#MyCityBikes.setServerRoot("http://localhost:9000")
 
-#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
-MyCityBikes.setServerRoot("http://localhost:9000")
+OSLO_PROVIDER_ID=MyCityBikes.getProviderForCity("Oslo").id
 
 # comment this out to test communication to the stubs
 #MyCityBikes.enableMocks()
@@ -111,6 +110,7 @@ def getStation(externalId, xml):
       array = description.partition("-")
       if not len(array[1]) == 0:
         description = array[2]
+      description = unicode(description, "utf-8")
     elif subNode.tag == "longitute": # Sic...
       longitude = subNode.text
     elif subNode.tag == "latitude":

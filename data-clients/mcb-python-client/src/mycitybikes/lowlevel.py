@@ -7,7 +7,20 @@ def info():
 # @param cityIds the list of ids of the cities to retrieve. None to retrieve them all
 def getCities(serverRoot, cityIds=None):
   h = httplib2.Http(".cache")
-  resp, content = h.request(serverRoot + "/cities.xml")
+  resp, content = h.request(serverRoot + "/cities/all.xml")
+  if (resp.status != 200):
+    # FIXME
+    pass
+  # FIXME this fails if no content-type specified
+  if (resp['content-type'] == 'text/xml'):
+    # FIXME
+    pass
+  return content
+
+# @param serverRoot the url of the serverRoot
+def getProviders(serverRoot):
+  h = httplib2.Http(".cache")
+  resp, content = h.request(serverRoot + "/providers/all.xml")
   if (resp.status != 200):
     # FIXME
     pass

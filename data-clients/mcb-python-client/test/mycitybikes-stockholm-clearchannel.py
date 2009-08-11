@@ -8,13 +8,13 @@ import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
-#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
-MyCityBikes.setServerRoot("http://localhost")
+MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+#MyCityBikes.setServerRoot("http://localhost")
 
 # comment this out to test communication to the stubs
-MyCityBikes.enableMocks()
+#MyCityBikes.enableMocks()
 
-print "Starting Oslo,ClearChannel synchronization"
+print "Starting Stockholm,ClearChannel synchronization"
 
 class McbException(Exception):
   def __init__(self, value):
@@ -47,22 +47,20 @@ def updateStationAndStatuses(providerId, inputFile):
   MyCityBikes.putStationAndStatuses(providerId, stationAndStatuses)
 
 def __usage():
-  print "USAGE: " + sys.argv[0] + " providerId assetfilepath"
-  print "\tproviderId\tthe id of the provider that manages the stations"
+  print "USAGE: " + sys.argv[0] + " [assetfilepath]"
   print "\tassetfilepath\tthe path of the file containing the android client XML assets"
 
 if __name__ == "__main__":
   import sys
-  if (len(sys.argv) < 2):
-    print "ERROR: Missing providerId argument"
-    __usage()
-    exit()
-  if (len(sys.argv) < 3):
-    print "ERROR: Missing input filepath argument"
+  if (len(sys.argv) > 2):
+    print "ERROR: too many arguments"
     __usage()
     exit()
 
-  providerId = sys.argv[1]
-  inputFile = sys.argv[2]
+  if (len(sys.argv) == 2):
+    inputFile = sys.argv[1]
+  else:
+    inputFile = "./assets/stockholm.xml"
 
+  providerId = OSLO_PROVIDER_ID=MyCityBikes.getProviderForCity("Stockholm").id
   updateStationAndStatuses(providerId, inputFile)
