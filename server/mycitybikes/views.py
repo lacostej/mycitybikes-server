@@ -5,7 +5,7 @@ from ragendja.template import render_to_response
 from ragendja.dbutils import get_object_or_404, to_json_data
 from mycitybikes import utils
 from mycitybikes.models import *
-from mycitybikes.forms import *
+#from mycitybikes.forms import *
 from google.appengine.ext import db
 from xml.dom.minidom import Document
 import xml.etree.ElementTree as ET
