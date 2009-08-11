@@ -53,13 +53,11 @@ class Provider(db.Model):
   
   def to_xml(self):
     extra = dict(id=self.key().id(),
-                 latitude=self.geoloc.lat, 
-                 longitude=self.geoloc.lon,
                  cityId=self.cityRef.key().id(),
                  creationDateTime=unicode(self.updateDateTime.isoformat()+ "Z"),
                  updateDateTime=unicode(self.updateDateTime.isoformat() + "Z"),
                  locationsUpdated=unicode(self.locationsUpdated.isoformat() + "Z"))
-    provider = obj2dict(self, self.properties(), exclude=['cityRef','geoloc'], extra=extra)
+    provider = obj2dict(self, self.properties(), exclude=['cityRef'], extra=extra)
     provider = dict_to_xml(provider, "provider")
     return provider
 
