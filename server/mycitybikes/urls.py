@@ -3,12 +3,20 @@ from django.conf.urls.defaults import *
 from mycitybikes.router import mapping
 from mycitybikes.views import *
 
+# FIXME this is invalid and we respond to unwanted urls.
+# e.g. invalidcities/ triggers cities/
+
 urlpatterns = patterns('mycitybikes.views',
 #GET
+    (r'cities/all\.xml$', 'cities_get'),
+# these 2 are deprecated. Replaced by cities/all.xml for consistency
     (r'cities/$', 'cities_get'),
     (r'cities\.xml$', 'cities_get'),
+
     (r'cities/(\d+)\.xml$', 'city_get'),
+# deprecated. Replaced by stations/all.xml for consistency
     (r'stations/$', 'stations_get'),
+    (r'stations/all\.xml$', 'stations_get'),
     (r'stations/(\d+)\.xml$', 'station_get'),
     (r'stations/city/(\d+)/all\.xml', 'stations_by_city_get'),
     (r'stations/city/(?P<cityId>\d+)/(?P<stationId>\d+)\.xml', 'station_by_city_get'),
