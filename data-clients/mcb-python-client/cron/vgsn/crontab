@@ -1,2 +1,2 @@
-*/10 * * * * /home/vgsn/Code/MyCityBikes/mycitybikes-server/data-clients/mcb-python-client/cron/vgsn/bin/oslo.sh  >> /home/vgsn/logs/mycitybikes.logs 2>&1
+*/10 * * * * (cd /home/vgsn/Code/MyCityBikes/mycitybikes-server/data-clients/mcb-python-client; ./cron/vgsn/bin/oslo.sh)  >> /home/vgsn/logs/mycitybikes.logs 2>&1
 
