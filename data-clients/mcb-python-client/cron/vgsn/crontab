@@ -1,1 +1,2 @@
-0,30 * * * * /home/vgsn/Code/MyCityBikes/mycitybikes-server/data-clients/mcb-python-client/cron/vgsn/oslo.sh
+*/10 * * * * /home/vgsn/Code/MyCityBikes/mycitybikes-server/data-clients/mcb-python-client/cron/vgsn/bin/oslo.sh  >> /home/vgsn/logs/mycitybikes.logs 2>&1
+
