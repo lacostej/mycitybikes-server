@@ -40,7 +40,7 @@ class StatusForm(forms.Form):
   freeSlots = forms.IntegerField(required=False, min_value=0)
   totalSlots = forms.IntegerField(required=False, min_value=0)
   
-  def get_model(self,station):
+  def get_model(self, station):
     data = self.cleaned_data
     return BikeStationStatus(stationRef=station,
                              availableBikes=data['availableBikes'],
