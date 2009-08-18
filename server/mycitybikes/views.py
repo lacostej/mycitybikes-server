@@ -45,7 +45,7 @@ def stations_put(request, providerId):
     try:
       xmltree = ET.XML(data)
     except:
-      raise HttpResponseBadRequest
+      raise HttpResponseBadRequest()
     
     try:
       save_station_status(xmltree, provider)
@@ -105,7 +105,6 @@ def status_by_station_get(request, cityId, stationId):#ask about it
   status = station.bikestationstatus_set.get()
   doc = utils.object_to_xml(status)
   return HttpResponse(doc.toxml(), content_type="text/xml")
-    
 
 def save_station_status(xmltree, provider):
 #TODO make it works for single station  
@@ -120,7 +119,7 @@ def save_station_status(xmltree, provider):
     station_form = BikeStationForm(node, provider)
     status_form = StatusForm(node.get('stationStatus',{}))
     if not station_form.is_valid() or not status_form.is_valid():
-      raise InvalidXMLNode(node)
+      raise InvalidXMLNode("%s >>>>> %s >>>>>>%s" % (utils.dct_to_str(node), utils.dct_to_str(station_form.errors), status_form.errors))
     stations.append(station_form.get_model())
     statuses.append(status_form)
   db.put(stations)

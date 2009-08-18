@@ -7,6 +7,16 @@ from google.appengine.ext.db import polymodel
 from xml.dom.minidom import Document
 from ragendja.dbutils import get_object_or_404, to_json_data
 
+
+"""Convert a dictionary to string"""
+def dct_to_str(dct):
+  aux = []
+  for key, value in dct.iteritems():
+    aux.append('%s:%s' % (key,value))
+  return '{ ' + ', '.join(aux) + ' }'
+
+
+
 def contains_keys(dct, keys):
   for key in keys:
     if not dct.has_key(key):
