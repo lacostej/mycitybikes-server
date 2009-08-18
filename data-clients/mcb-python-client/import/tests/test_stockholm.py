@@ -13,7 +13,7 @@ class test:
 
 
   def test_getStationsAndStatusesFromAndroidAssetFile(self):
-    stationsAndStatuses = getStationsAndStatusesFromAndroidAssetFile("5", "./assets/stockholm.xml")
+    stationsAndStatuses = getStationsAndStatusesFromAndroidAssetFile("5", "../assets/stockholm.xml")
     assert len(stationsAndStatuses) == 72
     assert stationsAndStatuses[0].latitude == "59.314224"
     # etc...

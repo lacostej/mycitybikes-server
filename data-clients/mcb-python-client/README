@@ -1,1 +1,1 @@
-export PYTHONPATH=./src/:.:/usr/local/lib/python
+export PYTHONPATH=./import/:./src/:.:/usr/local/lib/python
