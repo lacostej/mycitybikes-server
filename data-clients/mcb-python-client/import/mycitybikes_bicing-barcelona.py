@@ -35,7 +35,7 @@ def parse_node(node):
     return station
                    
 def parse_document():
-    f = open('tests/data/kml.xml', 'rb')
+    f = open('tests/data/barcelona.xml', 'rb')
     content = f.read()
     f.close()
     xml = ET.XML(content)
