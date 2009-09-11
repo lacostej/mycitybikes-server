@@ -11,7 +11,7 @@ from xml.dom.minidom import Document
 import xml.etree.ElementTree as ET
 import logging
 import itertools
-
+import datetime
 #Station
 def stations_get(request):
   doc = utils.object_to_xml(BikeStation.all(), "stations")
@@ -49,13 +49,15 @@ def stations_put(request, providerId):
     
     try:
       save_station_status(xmltree, provider)
+      provider.locationsUpdated = datetime.datetime.now()
+      provider.put()
       return HttpResponse("OK")
     except InvalidXML, e:
       return HttpResponseBadRequest(e.message)
     except InvalidXMLNode, e:
       return HttpResponseBadRequest(e.message)
     except Exception, e: 
-      return HttpResponse(e.message)
+      return HttpResponse("ERROR %s" %e.message)
     return HttpResponse("ERROR")
     
   else:

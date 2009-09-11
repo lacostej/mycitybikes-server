@@ -30,13 +30,13 @@ class BikeStationForm(forms.Form):
   def get_model(self):
     data = self.cleaned_data
     return BikeStation(providerRef=self.provider,
-                       name=data['description'],
+                       name= data['name'] or data['description'],
                        description=data['description'],
                        geoloc=self.get_geoloc(),
                        externalId="0")
 
 class StatusForm(forms.Form):
-  online = forms.IntegerField(required=True, min_value=0)
+  #online = forms.IntegerField(required=True, min_value=0)
   availableBikes = forms.IntegerField(required=False, min_value=0)
   freeSlots = forms.IntegerField(required=False, min_value=0)
   totalSlots = forms.IntegerField(required=False, min_value=0)

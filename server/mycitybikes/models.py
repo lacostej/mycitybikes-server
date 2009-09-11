@@ -64,7 +64,7 @@ class Provider(db.Model):
 class BikeStation(db.Model):
   name = db.StringProperty(required=True)
   providerRef = db.ReferenceProperty(Provider, required=True)
-  description = db.StringProperty(required=True)
+  description = db.StringProperty(required=False)
   externalId = db.StringProperty(required=False) # Ask about it
   geoloc = db.GeoPtProperty(required=True)
   creationDateTime = db.DateTimeProperty(required=False, auto_now_add=True)

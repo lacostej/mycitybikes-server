@@ -57,14 +57,14 @@ def convertParisXml(xml, providerId):
                                           longitude='lon',
                                           description='fullAddress',
                                           number='number'))
-    station['name']  = station['name'].split('-')[1].strip()
+    station['name']  = station['name'].split('-',1)[1].strip()
     station['longitude'] = tofloat(station['longitude'])
     station['latitude'] = tofloat(station['latitude'])
     if not (-90 <= station['longitude'] <= 90):
       continue
     if not (-90 <= station['latitude'] <= 90):
       continue    
-    url = Paris.UrlStation%fields['number']
+    url = Paris.UrlStation%fields['nuycitybikesmber']
     print "URL %s" % url
     stationstatus = ET.XML(getXml(url))
     station_status = dict(
@@ -90,7 +90,6 @@ def updateStationAndStatuses(providerId):
 
 if __name__ == "__main__":
   PROVIDER_ID=MyCityBikes.getProviderForCity("Paris").id
-  print "----> %s" % PROVIDER_ID
   updateStationAndStatuses(PROVIDER_ID)
         
         

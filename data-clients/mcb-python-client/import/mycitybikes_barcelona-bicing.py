@@ -33,7 +33,12 @@ def parse_node(node):
         description = node[0].text
         soup = BeautifulStoneSoup(description)
         divs = soup.findAll('div')
-        name = divs[1].string.split('- ')[1]
+        name = divs[1].string.split('- ',1)[1]
+        if name.endswith('/div>'):
+          name = name[:-5]
+        elif name.endswith('>'):
+          name = name[:-1]
+          
         bikes = divs[3].contents[0]
         aparcamientos = divs[3].contents[2] # TODO: find a translation and check the order    
         
@@ -56,7 +61,7 @@ def parse_node(node):
                    description=name,
                    latitude=latitude,
                    longitude=longitude)
-    
+    #TODO: what should i do with these vars?
     station_status = dict(online=bikes,
                           availableBikes=bikes,
                           freeSlots=bikes,

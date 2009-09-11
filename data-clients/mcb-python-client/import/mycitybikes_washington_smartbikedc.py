@@ -1,10 +1,6 @@
-import re
-STATION_RE = re.compile("""// \d""")
-STATIONINFO_RE = re.compile(""".*<font color=red>([0-9]*)</font>.*Slots: ([0-9]*)<br>.*""")
-POINT_RE = re.compile(""".*\\((.*),(.*)\\).*""")
 #!/usr/bin/python
 # mycitybikes_montreal_bixi.py
-
+import re
 from mycitybikes.mycitybikes import *
 from datetime import *
 import httplib2
@@ -15,6 +11,10 @@ from elementtidy.TidyHTMLTreeBuilder import TidyHTMLTreeBuilder as TB
 from utils import *
 #MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
 MyCityBikes.setServerRoot("http://localhost:9000")
+
+STATION_RE = re.compile("""// \d""")
+STATIONINFO_RE = re.compile(""".*<font color=red>([0-9]*)</font>.*Slots: ([0-9]*)<br>.*""")
+POINT_RE = re.compile(""".*\\((.*),(.*)\\).*""")
 
 class Washington:
   Url = "https://www.smartbikedc.com/smartbike_locations.asp"

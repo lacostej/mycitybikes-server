@@ -37,7 +37,7 @@ def getXml(url):
   if (resp.status != 200):
     raise McbException("Unexpected response status: expected '200' but got '" + str(resp.status) + "'")
   # FIXME this fails if no content-type specified
-  if (resp['content-type'] != 'application/xml'):
+  if (resp['content-type'] not in  ['application/xml', 'text/xml']):
     raise McbException("Unexpected response content-type: expected 'text/xml' but got '" + resp['content-type'] + "'")
   return content
 

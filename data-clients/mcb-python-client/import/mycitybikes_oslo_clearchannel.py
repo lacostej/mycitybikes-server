@@ -7,8 +7,8 @@ import httplib2
 import xml.etree.ElementTree as ET
 from StringIO import StringIO
 
-MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
-#MyCityBikes.setServerRoot("http://localhost:8000")
+#MyCityBikes.setServerRoot("http://mycitybikes.appspot.com")
+MyCityBikes.setServerRoot("http://localhost:9000")
 
 OSLO_PROVIDER_ID=MyCityBikes.getProviderForCity("Oslo").id
 
